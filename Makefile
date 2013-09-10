@@ -25,6 +25,6 @@ ma: $(OBJECTS)
 	$(CCW)  -lopengl32 -lfreeglut -lglu32 $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf *o *ow ma.exe ma
+	rm -rf *.o *.ow *.exe *
 
-i586-mingw32msvc-g++ test1.cpp -o test1.exe -D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include/ -lfreeglut_static -lopengl32 -lwinmm -lcrypt32 -lgdi32
+#i586-mingw32msvc-g++ test1.cpp -o test1.exe -D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include/ -lfreeglut_static -lopengl32 -lwinmm -lcrypt32 -lgdi32
