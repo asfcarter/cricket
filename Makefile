@@ -1,15 +1,20 @@
 CC=g++
 CCW=i586-mingw32msvc-g++
-CFLAGS=-Wall -c
-CFLAGSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include/ -Wall -c
-LIBS=-lGL -lglut
-LIBSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include -lfreeglut_static -lopengl32 -lwinmm -lgdi32
-SOURCES=test1.cpp
+#CFLAGS=-Wall -c
+CFLAGS=-Wall -I/usr/include/SDL -c
+#CFLAGSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include/ -Wall -c
+CFLAGSW=-I/usr/i586-mingw32msvc/include/SDL -Wall -c
+#LIBS=-lGL -lglut
+LIBS=-lSDL
+#LIBSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include -lfreeglut_static -lopengl32 -lwinmm -lgdi32
+LIBSW=-I/usr/i586-mingw32msvc/include/SDL -L$(WINDOWS_SDL) -lmingw32 -lSDLmain -lSDL -lwinmm -lgdi32 -mwindows -lm -lopengl32 -glu32 -Wl,-R
+SOURCES=test2_sdl.cpp
+#SOURCES=test1.cpp
 #SOURCES=main.cpp player.cpp innings.cpp team.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o)
 OBJECTSW=$(SOURCES:%.cpp=%.ow)
 
-all: ma ma.exe
+all: ma.exe
 
 ma.exe: $(OBJECTSW)
 	$(CCW) $^ -o $@ $(LIBSW)

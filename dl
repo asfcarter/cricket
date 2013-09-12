@@ -1,0 +1,23 @@
+[33mcommit a1a352ebb9b30f54490db0653036f63ce04b0fcd[m
+Author: Andrew S F Carter <asfcarter@yahoo.co.uk>
+Date:   Tue Sep 10 17:51:16 2013 +0100
+
+    Updated Makefile so that dual compilation works for square tutorial
+
+[33mcommit f40a54cf43beeeca817c16f7743646083f56f96a[m
+Author: Andrew S F Carter <asfcarter@yahoo.co.uk>
+Date:   Tue Sep 10 17:18:26 2013 +0100
+
+    Modify make clean
+
+[33mcommit 43f621672aa2dfe49f344a0588f5bdb3853a7473[m
+Author: Andrew S F Carter <asfcarter@yahoo.co.uk>
+Date:   Tue Sep 10 15:28:35 2013 +0100
+
+    Changes to Makefile
+
+[33mcommit 77951f01d86e1ba5550e1d6028c5bcdd35433a09[m
+Author: Andrew S F Carter <asfcarter@yahoo.co.uk>
+Date:   Wed Sep 4 10:17:29 2013 +0100
+
+    initial project version
