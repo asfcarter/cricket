@@ -1,50 +1,39 @@
-#include <cstdlib>
 #include "SDL.h"
+#include <stdio.h>
 
 int main(int argc, char** argv)
 {
-    // Initialize SDL, using only the video library.
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-        fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
-            exit(1); 
-    }
-    atexit(SDL_Quit); //clean up the library when you are done with it.
-    
-    // Create a screen surface, and set the video mode 
-    SDL_Surface *screen;
-    screen = SDL_SetVideoMode(640, 480, 16, SDL_SWSURFACE);
-    if ( screen == NULL ) {
-       fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
-       exit(1);
-    }
 
-    SDL_Event event;
-    bool running = true;
-    // Loop forever, waiting for the user to quit
-    while(running){
-       while ( SDL_PollEvent(&event) ) {
-          switch (event.type) {
-             case SDL_KEYDOWN:
-             case SDL_KEYUP:
-                if (event.key.type == SDL_KEYUP)
-                   printf("RELEASED: ");
-                else
-                   printf("PRESSED: ");
-                 printf( "%s\n", SDL_GetKeyName(event.key.keysym.sym));
-             break;
-             case SDL_MOUSEMOTION:
-                printf("Mouse moved by %d,%d to (%d,%d)\n", 
-                    event.motion.xrel, event.motion.yrel, event.motion.x, event.motion.y);
-              break;
-              case SDL_MOUSEBUTTONDOWN:
-                   printf("Mouse button %d pressed at (%d,%d)\n",
-                       event.button.button, event.button.x, event.button.y);
-               break;
-               case SDL_QUIT:
-                  running = false;
-               }
-           }
-        }
+  SDL_Window *window;        // Declare a pointer to an SDL_Window
 
-    return 0;
+  SDL_Init(SDL_INIT_VIDEO);   // Initialize SDL2
+
+  // Create an application window with the following settings:
+  window = SDL_CreateWindow( 
+    "An SDL2 window",                  //    window title
+    SDL_WINDOWPOS_UNDEFINED,           //    initial x position
+    SDL_WINDOWPOS_UNDEFINED,           //    initial y position
+    640,                               //    width, in pixels
+    480,                               //    height, in pixels
+    SDL_WINDOW_OPENGL                  //    flags - see below
+  );
+  
+  // Check that the window was successfully made
+  if(window==NULL){   
+    // In the event that the window could not be made...
+    printf("Could not create window: %s\n", SDL_GetError());
+    return 1;
+  }
+  
+  // The window is open: enter program loop (see SDL_PollEvent)
+
+  SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
+  
+  // Close and destroy the window
+  SDL_DestroyWindow(window); 
+   
+  // Clean up
+  SDL_Quit(); 
+  return 0;   
+ 
 }
