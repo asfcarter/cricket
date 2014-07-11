@@ -1,14 +1,15 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include "team.h"
-#include "screen.h"
 
 #define ARRAYSIZE 400
 
 
-class game: public screen
+class Game
 {
 private:
    double gamespeed;
-	team team[2];
    int tosschange; //if toss won by team 1 tosschange=1
    int inningsnumber;
    int followon;
@@ -17,18 +18,10 @@ private:
 	int ballx,bally;
 
 public:
+	Team team[2];
 
-	game();
-	void scoreboard(int,int);
-	void toss();
-   void inningsoverscreen();
-	void pause(int);
-	void createshotarray();
-	int wicket(int,int);
-   int closestwicket(void);
-   int closestfielder(void);
-	void shot(int);
-   void over(int);
-	int run(int,int);
-  
+        Game();
+        virtual int firstscreen()=0;  
 };
+
+#endif

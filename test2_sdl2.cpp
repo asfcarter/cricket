@@ -1,10 +1,13 @@
 #include "SDL.h"
+#include "SDL_opengl.h"
 #include <stdio.h>
 
 int main(int argc, char** argv)
 {
 
   SDL_Window *window;        // Declare a pointer to an SDL_Window
+  int i,len;
+  char ar[10] ="abcdefg";
 
   SDL_Init(SDL_INIT_VIDEO);   // Initialize SDL2
 
@@ -24,6 +27,16 @@ int main(int argc, char** argv)
     printf("Could not create window: %s\n", SDL_GetError());
     return 1;
   }
+  
+  glcolor3f(150,150,150);
+  glRasterPos2f(50,50);
+  len = (int)strlen(ar);
+  for(i=0;i<len;i++)
+  {
+     glutBitmapCharacter(font,ar[i]);
+  }
+  
+  
   
   // The window is open: enter program loop (see SDL_PollEvent)
 

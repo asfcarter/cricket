@@ -1,6 +1,6 @@
 #include "innings.h"
 
-class team
+class Team
 {
 private:
     char teamname[12];
@@ -8,7 +8,7 @@ private:
 
 public:
     Innings innings[2];
-    team();
+    Team();
     void setteamcomputer1();
     void setteamcomputer2();
     void setteammanual();

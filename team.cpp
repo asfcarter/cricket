@@ -2,18 +2,18 @@
 //#include <conio>
 //#include "stdlib.h"
 
-team::team()
+Team::Team()
 {
-strcpy(teamname,"            ");
+//strcpy(teamname,"               ");
 }
 
-char* team::getteamname()
+char* Team::getteamname()
 {
 return teamname;
 }
 
 
-void team::setteamcomputer1()
+void Team::setteamcomputer1()
 {
 strcpy(teamname,"England");
 innings[0].player[0].setname("Atherton");
@@ -51,7 +51,7 @@ innings[0].player[9].setposition(245,310);
 innings[1]=innings[0];
 }
 
-void team::setteamcomputer2()
+void Team::setteamcomputer2()
 {
 strcpy(teamname,"South Africa");
 innings[0].player[0].setname("Kirsten");
@@ -90,7 +90,7 @@ innings[1]=innings[0];
 }
 
 
-void team::setteammanual()
+void Team::setteammanual()
 {
 
 }
