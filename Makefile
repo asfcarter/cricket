@@ -18,7 +18,7 @@ SOURCES=main.cpp player.cpp innings.cpp team.cpp game.cpp screen.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 OBJECTSW=$(SOURCES:%.cpp=%.ow)
 
-all: ma
+all: ma.exe
 
 ma.exe: $(OBJECTSW)
 	$(CCW) $^ -o $@ $(LIBSW)
