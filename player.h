@@ -1,6 +1,6 @@
 #include <cstring>
 
-class Player
+class Player : Batsman, Bowler
 {
 private:
    int x,y;
@@ -10,10 +10,11 @@ private:
 public:
     Player &operator=(const Player &p);
     Player(){
-	   ismaiden=overs=runsconceeded=wickets=maidens=bowlernumber=0;
-	   balls=ones=twos=threes=fours=sixes=runsscored=batsmannumber=howout=0;
-	   oversball=1;
-		 }
+	       ismaiden=overs=runsconceeded=wickets=maidens=bowlernumber=0;
+	       balls=ones=twos=threes=fours=sixes=runsscored=batsmannumber=howout=0;
+	       oversball=1;
+	       setname("");
+            }
     void setname(const char *n){
 	   strcpy(name,n);
 	   }
@@ -33,17 +34,17 @@ public:
     void changebowlernum(int num);
     int getbowlernum();
     void changeballsfaced(int r);
-    int getballs();
+    int get_balls_faced();
     int getones();
     int gettwos();
     int getfours();
     int getthrees();
     int getsixes();
-    inline int getrunsscored();
-    void changebatsmannum(int num);
-    int getbatsmannum();
-    void changehowout(int out);
-    int gethowout();
+    int getrunsscored();
+    void setbatsmannum(int num);
+    int get_batsmannum();
+    void set_how_out(int out);
+    int get_how_out();
 
 
 };

@@ -1,5 +1,5 @@
-#include "player.h"
 #include <cstring>
+#include "player.h"
 
 char *Player::getname(){
 return name;
@@ -126,7 +126,7 @@ int Player::getrunsscored(){
 return runsscored;
 }
 
-void Player::changebatsmannum(int num){
+void Player::setbatsmannum(int num){
 batsmannumber=num;
 }
 
@@ -134,7 +134,7 @@ int Player::getbatsmannum(){
 return batsmannumber;
 }
 
-void Player::changehowout(int out){
+void Player::sethowout(int out){
 howout=out;
 }
 
