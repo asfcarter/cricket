@@ -28,7 +28,7 @@ LIBSW=-I/usr/i586-mingw32msvc/include/SDL2 -static -L/usr/i586-mingw32msvc/bin -
 #SOURCES=test1.cpp
 SOURCES=main.cpp player.cpp innings.cpp team.cpp game.cpp screen.cpp
 
-all: fielder_test bowler_test
+all: fielder_test bowler_test batsman_test player_test
 
 LIBS_FIELDER_TEST=-L/usr/local/lib 
 SOURCES_FIELDER_TEST=fielder_test.cpp fielder.cpp
@@ -42,6 +42,18 @@ OBJECTS_BOWLER_TEST=$(SOURCES_BOWLER_TEST:%.cpp=%.o)
 bowler_test: $(OBJECTS_BOWLER_TEST)
 	$(CC) $(LIBS_BOWLER_TEST) $^ -o $@ 
 
+LIBS_BATSMAN_TEST=-L/usr/local/lib 
+SOURCES_BATSMAN_TEST=batsman_test.cpp batsman.cpp
+OBJECTS_BATSMAN_TEST=$(SOURCES_BATSMAN_TEST:%.cpp=%.o)
+batsman_test: $(OBJECTS_BATSMAN_TEST)
+	$(CC) $(LIBS_BATSMAN_TEST) $^ -o $@ 
+
+LIBS_PLAYER_TEST=-L/usr/local/lib 
+SOURCES_PLAYER_TEST=player_test.cpp player.cpp batsman.cpp bowler.cpp fielder.cpp
+OBJECTS_PLAYER_TEST=$(SOURCES_PLAYER_TEST:%.cpp=%.o)
+player_test: $(OBJECTS_PLAYER_TEST)
+	$(CC) $(LIBS_PLAYER_TEST) $^ -o $@ 
+
 ma.exe: $(OBJECTSW)
 	$(CCW) $^ -o $@ $(LIBSW)
 
@@ -49,4 +61,4 @@ ma: $(OBJECTS)
 	$(CC) $(LIBS) $^ -o $@ 
 	
 clean:
-	rm -rf *.o *.ow *.exe fielder_test bowler_test
+	rm -rf *.o *.ow *.exe fielder_test bowler_test batsman_test player_test

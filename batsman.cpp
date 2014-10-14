@@ -1,167 +1,67 @@
 #include <cstring>
-#include "player.h"
+#include "batsman.h"
 
-char *Player::getname(){
-return name;
-}
 
-void Player::setposition(int x1,int y1){
-x=x1;
-y=y1;
-}
-
-void Player::setx(int x1){
-x=x1;
-}
-
-void Player::sety(int y1){
-y=y1;
-}
-
-int Player::getx(){
-return x;
-}
-
-int Player::gety(){
-return y;
-}
-
-int Player::changeoversball(int r){
-  oversball++;
-  runsconceeded+=r;
-  if(r!=0){
-  ismaiden=1;
-  }
-
-    if((ismaiden==0)&&(oversball==7)){
-    maidens++;
-    oversball=1;
-    overs++;
-    }
-    else if((ismaiden==1)&&(oversball==7)){
-    oversball=1;
-    overs++;
-    ismaiden=0;
-    }
-return oversball;
-}
-
-int Player::getovers(){
-return overs;
-}
-
-int Player::getoversball(){
-return oversball;
-}
-
-int Player::getmaidens(){
-return maidens;
-}
-
-int Player::getrunsconceeded(){
-return runsconceeded;
-}
-
-void Player::changewickets(){
-wickets++;
-}
-
-int Player::getwickets(){
-return wickets;
-}
-
-void Player::changebowlernum(int num){
-bowlernumber=num;
-}
-
-int Player::getbowlernum(){
-return bowlernumber;
-}
-
-void Player::changeballsfaced(int r){
+void Batsman::change_balls_faced(int r){
 balls++;
-runsscored+=r;
+runs_scored+=r;
    if(r==1){
-   ones++;
+   	ones++;
    }
    else if(r==2){
-   twos++;
+   	twos++;
    }
    else if(r==3){
-   threes++;
+   	threes++;
    }
    else if(r==4){
-   fours++;
+   	fours++;
    }
    else if(r==6){
-   sixes++;
+   	sixes++;
    }
 }
 
-int Player::getballs(){
+int Batsman::get_balls_faced(){
 return balls;
 }
 
-int Player::getones(){
+int Batsman::get_ones(){
 return ones;
 }
 
-int Player::gettwos(){
+int Batsman::get_twos(){
 return twos;
 }
 
-int Player::getfours(){
+int Batsman::get_fours(){
 return fours;
 }
 
-int Player::getthrees(){
+int Batsman::get_threes(){
 return threes;
 }
 
-int Player::getsixes(){
+int Batsman::get_sixes(){
 return sixes;
 }
 
-int Player::getrunsscored(){
-return runsscored;
+int Batsman::get_runs_scored(){
+return runs_scored;
 }
 
-void Player::setbatsmannum(int num){
-batsmannumber=num;
+void Batsman::set_batsman_num(int num){
+batsman_number=num;
 }
 
-int Player::getbatsmannum(){
-return batsmannumber;
+int Batsman::get_batsman_num(){
+return batsman_number;
 }
 
-void Player::sethowout(int out){
-howout=out;
+void Batsman::set_how_out(int out){
+how_out=out;
 }
 
-int Player::gethowout(){
-return howout;
-}
-
-Player& Player::operator=(const Player &p)
-{
-x=		p.x;
-y=		p.y;
-overs=		p.overs;
-oversball=	p.oversball;
-runsconceeded=	p.runsconceeded;
-wickets=	p.wickets;
-maidens=	p.maidens;
-ismaiden=	p.maidens;
-bowlernumber=	p.bowlernumber;
-balls= 		p.balls;
-ones=		p.ones;
-twos=		p.twos;
-threes=		p.threes;
-fours=		p.fours;
-sixes=		p.sixes;
-runsscored=	p.runsscored;
-batsmannumber=	p.batsmannumber;
-howout=		p.howout;
-strcpy(name,p.name);
-return *this;
+int Batsman::get_how_out(){
+return how_out;
 }

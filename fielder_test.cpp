@@ -52,35 +52,33 @@ return ret;
 bool test1()
 {
 Fielder a;
-
 return check_x_pos(&a, 0);
 }
 
 bool test2()
 {
 Fielder a;
-
 return check_y_pos(&a, 0);
 }
 
 bool test3()
 {
 Fielder a;
-a.set_x(10);
+	a.set_x(10);
 return check_x_pos(&a, 10);
 }
 
 bool test4()
 {
 Fielder a;
-a.set_y(20);
+	a.set_y(20);
 return check_y_pos(&a, 20);
 }
 
 bool test5()
 {
 Fielder a;
-a.set_position(-15,-25);
+	a.set_position(-15,-25);
 return (check_x_pos(&a, -15) && check_y_pos(&a, -25));
 }
 
