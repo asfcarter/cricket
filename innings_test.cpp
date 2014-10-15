@@ -47,11 +47,17 @@ bool (*test_func_ptr[])() = {
 
 bool test1()
 {
-return true;
+Innings a;
+return ((a.get_innings_total()==0)&&(a.get_wickets()==0)&&(a.get_wicket_fall(1)==0)&&(a.get_wicket_fall(2)==0)&&(a.get_wicket_fall(3)==0)&&(a.get_wicket_fall(4)==0)&&(a.get_wicket_fall(5)==0)&&(a.get_wicket_fall(6)==0)&&(a.get_wicket_fall(7)==0)&&(a.get_wicket_fall(8)==0)&&(a.get_wicket_fall(9)==0)&&(a.get_wicket_fall(10)==0)&&(a.get_extras()==0)&&(a.get_overs()==0)&&(a.get_batsman_facing()==0)&&(a.get_non_striker()==0)&&(a.get_last_bowler()==0)&&(a.get_declared()==0));
 }
 
 bool test2()
 {
+Innings a;
+
+if(strcmp(a.player[0].get_name(),""))
+return false;
+
 return true;
 }
 

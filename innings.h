@@ -10,13 +10,15 @@ private:
   int non_striker;
   int last_bowler;
   int declared;
+
+public:
   Player player[11];
 
 public:
   Innings();
   Innings& operator=(const Innings &i);
   void change_innings_runs(int run, int is_extra);
-  int get_innings_runs();
+  int get_innings_total();
   int get_extras();
   int get_wickets();
   void set_wicket_fall();

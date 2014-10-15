@@ -22,7 +22,7 @@ innings_total+=run;
   }
 }
 
-int Innings::get_innings_runs(){
+int Innings::get_innings_total(){
 return innings_total;
 }
 
