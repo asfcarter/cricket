@@ -3,33 +3,32 @@
 class Innings
 {
 private:
-  int inningsruns;
-  int wickets,wickfall[10],extras;
+  int innings_total;
+  int wickets, wicket_fall[10], extras;
   int overs;
-  int batsmanfacing;
-  int nonstriker;
-  int lastbowler;
+  int batsman_facing;
+  int non_striker;
+  int last_bowler;
   int declared;
+  Player player[11];
 
 public:
   Innings();
   Innings& operator=(const Innings &i);
-  Player player[11];
-  void changeinningsruns(int run,int isextra);
-  int getinningsruns();
-  int getextras();
-  int getwickets();
-  void setwickfall();
-  int getwickfall(int wicketnumber);
-  int getovers();
-  void changeovers();
-  int getbatsmanfacing();
-  int getnonstriker();
-  void setbatsmanfacing(int);
-  void setnonstriker(int);
-  void setlastbowler(int);
-  int getlastbowler();
-  void setdeclared();
-  int getdeclared();
-
+  void change_innings_runs(int run, int is_extra);
+  int get_innings_runs();
+  int get_extras();
+  int get_wickets();
+  void set_wicket_fall();
+  int get_wicket_fall(int wicket_number);
+  int get_overs();
+  void change_overs();
+  int get_batsman_facing();
+  int get_non_striker();
+  void set_batsman_facing(int);
+  void set_non_striker(int);
+  void set_last_bowler(int);
+  int get_last_bowler();
+  void set_declared();
+  int get_declared();
 };

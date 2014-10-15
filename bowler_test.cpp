@@ -24,7 +24,7 @@ bool test1()
 {
 Bowler a;
 
-return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_conceeded() || a.get_wickets() || a.get_bowler_num()));
+return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_conceeded() || a.get_wickets() || a.get_bowler_number()));
 }
 
 bool test2()
@@ -48,8 +48,8 @@ return true;
 bool test3()
 {
 Bowler a;
-	a.set_bowler_num(4);
-        if(a.get_bowler_num() != 4)
+	a.set_bowler_number(4);
+        if(a.get_bowler_number() != 4)
 	{
 		return false;
 	}

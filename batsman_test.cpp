@@ -25,21 +25,21 @@ bool (*test_func_ptr[])() = {
 bool test1()
 {
 Batsman a;
-return ( (a.get_balls_faced()==0) && (a.get_ones()==0) && (a.get_twos()==0) && (a.get_fours()==0) && (a.get_sixes()==0) && (a.get_threes()==0) && (a.get_runs_scored()==0) && (a.get_batsman_num()==0) && (a.get_how_out()==0) );
+return ( (a.get_balls_faced()==0) && (a.get_ones()==0) && (a.get_twos()==0) && (a.get_fours()==0) && (a.get_sixes()==0) && (a.get_threes()==0) && (a.get_runs_scored()==0) && (a.get_batsman_number()==0) && (a.get_how_out()==0) );
 }
 
 bool test2()
 {
 Batsman a;
 
-    a.set_batsman_num(5);
-    if(a.get_batsman_num() != 5)
+    a.set_batsman_number(5);
+    if(a.get_batsman_number() != 5)
     {
     	return false;
     }
 
-    a.set_batsman_num(11);
-    if(a.get_batsman_num() != 11)
+    a.set_batsman_number(11);
+    if(a.get_batsman_number() != 11)
     {
     	return false;
     }

@@ -2,56 +2,56 @@
 #include "bowler.h"
 
 void Bowler::change_overs_ball(int r){
-  oversball++;
-  runsconceeded+=r;
+  overs_ball++;
+  runs_conceeded+=r;
   if(r!=0){
-  ismaiden=1;
+  is_maiden=1;
   }
 
-    if(oversball==6)
+    if(overs_ball==6)
     {
-    	oversball=0;
+    	overs_ball=0;
     	overs++;
 
-    	if(ismaiden==0)
+    	if(is_maiden==0)
 	{
 		maidens++;
 	}
 	else
 	{
-		ismaiden=0;
+		is_maiden=0;
 	}
     }
 }
 
-int Bowler::get_overs_ball(){
-return oversball;
+int Bowler::get_overs_ball() const{
+return overs_ball;
 }
 
-int Bowler::get_overs(){
+int Bowler::get_overs() const{
 return overs;
 }
 
-int Bowler::get_maidens(){
+int Bowler::get_maidens() const{
 return maidens;
 }
 
-int Bowler::get_runs_conceeded(){
-return runsconceeded;
+int Bowler::get_runs_conceeded() const{
+return runs_conceeded;
 }
 
 void Bowler::change_wickets(){
 wickets++;
 }
 
-int Bowler::get_wickets(){
+int Bowler::get_wickets() const{
 return wickets;
 }
 
-void Bowler::set_bowler_num(int num){
-bowlernumber=num;
+void Bowler::set_bowler_number(int num){
+bowler_number=num;
 }
 
-int Bowler::get_bowler_num(){
-return bowlernumber;
+int Bowler::get_bowler_number() const{
+return bowler_number;
 }

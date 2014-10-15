@@ -21,6 +21,8 @@ bool test15();
 bool test16();
 bool test17();
 bool test18();
+bool test19();
+bool test20();
 
 bool (*test_func_ptr[])() = {
                              	test1, 
@@ -40,7 +42,9 @@ bool (*test_func_ptr[])() = {
 				test15,
 				test16,
 				test17,
-				test18
+				test18,
+				test19,
+				test20
                             };
 
 
@@ -110,21 +114,21 @@ return true;
 bool test3()
 {
 Player a;
-return ( (a.get_balls_faced()==0) && (a.get_ones()==0) && (a.get_twos()==0) && (a.get_fours()==0) && (a.get_sixes()==0) && (a.get_threes()==0) && (a.get_runs_scored()==0) && (a.get_batsman_num()==0) && (a.get_how_out()==0) );
+return ( (a.get_balls_faced()==0) && (a.get_ones()==0) && (a.get_twos()==0) && (a.get_fours()==0) && (a.get_sixes()==0) && (a.get_threes()==0) && (a.get_runs_scored()==0) && (a.get_batsman_number()==0) && (a.get_how_out()==0) );
 }
 
 bool test4()
 {
 Player a;
 
-    a.set_batsman_num(5);
-    if(a.get_batsman_num() != 5)
+    a.set_batsman_number(5);
+    if(a.get_batsman_number() != 5)
     {
     	return false;
     }
 
-    a.set_batsman_num(11);
-    if(a.get_batsman_num() != 11)
+    a.set_batsman_number(11);
+    if(a.get_batsman_number() != 11)
     {
     	return false;
     }
@@ -211,7 +215,7 @@ bool test9()
 {
 Player a;
 
-return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_conceeded() || a.get_wickets() || a.get_bowler_num()));
+return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_conceeded() || a.get_wickets() || a.get_bowler_number()));
 }
 
 bool test10()
@@ -235,8 +239,8 @@ return true;
 bool test11()
 {
 Player a;
-	a.set_bowler_num(4);
-        if(a.get_bowler_num() != 4)
+	a.set_bowler_number(4);
+        if(a.get_bowler_number() != 4)
 	{
 		return false;
 	}
@@ -303,7 +307,70 @@ Player a;
 return (check_x_pos(&a, -15) && check_y_pos(&a, -25));
 }
 
+bool test19()
+{
+Player a,b;
 
+	a.set_name("Andy");
+        if(strcmp(a.get_name(),"Andy"))
+	{
+		return false;
+	}
+	
+	a.set_name("Louise");
+        if(strcmp(a.get_name(),"Louise"))
+	{
+		return false;
+	}
+	
+	a.set_name("Rob");
+        if(strcmp(a.get_name(),"Rob"))
+	{
+		return false;
+	}
+	
+	b=a;
+	
+        if(strcmp(b.get_name(),"Rob"))
+	{
+		return false;
+	}	
+
+return true;
+}
+
+bool test20()
+{
+Player a;
+
+	a.set_name("Andy");
+        if(strcmp(a.get_name(),"Andy"))
+	{
+		return false;
+	}
+	
+	a.set_name("Louise");
+        if(strcmp(a.get_name(),"Louise"))
+	{
+		return false;
+	}
+	
+	a.set_name("Rob");
+        if(strcmp(a.get_name(),"Rob"))
+	{
+		return false;
+	}
+		
+
+Player b;
+b=a;
+        if(strcmp(b.get_name(),"Rob"))
+	{
+		return false;
+	}
+	
+return true;
+}
 
 int player_test()
 {

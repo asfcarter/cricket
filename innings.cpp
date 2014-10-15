@@ -3,113 +3,112 @@
 
 Innings::Innings(){
 int i;
-declared=inningsruns=wickets=extras=overs=0;
+declared=innings_total=wickets=extras=overs=0;
   for(i=0;i<11;i++){
-  player[i].changebatsmannum(i+1);
-  wickfall[i]=0;
+  player[i].set_batsman_number(i+1);
+  wicket_fall[i]=0;
   }
 
-batsmanfacing=nonstriker=lastbowler=0;
+batsman_facing=non_striker=last_bowler=0;
 }
 
-void Innings::changeinningsruns(int run,int isextra){
-inningsruns+=run;
-  if(isextra==0){
+void Innings::change_innings_runs(int run,int is_extra){
+innings_total+=run;
+  if(is_extra==0){
   extras+=run;
   }
   else{
-  player[isextra-1].changeballsfaced(run);
+  player[is_extra-1].change_balls_faced(run);
   }
-//cout << "|||" << run <<"|||"<< isextra;
 }
 
-int Innings::getinningsruns(){
-return inningsruns;
+int Innings::get_innings_runs(){
+return innings_total;
 }
 
-int Innings::getextras(){
+int Innings::get_extras(){
 return extras;
 }
 
-int Innings::getwickets(){
+int Innings::get_wickets(){
 return wickets;
 }
 
-int Innings::getwickfall(int wicketnumber){
-return wickfall[wicketnumber-1];
+int Innings::get_wicket_fall(int wicket_number){
+return wicket_fall[wicket_number-1];
 }
 
-void Innings::setwickfall(){
-wickfall[wickets]=inningsruns;
+void Innings::set_wicket_fall(){
+wicket_fall[wickets]=innings_total;
 wickets++;
 }
 
 Innings& Innings::operator=(const Innings &i)
 {
 int j;
-inningsruns=i.inningsruns;
+innings_total=i.innings_total;
 wickets=i.wickets;
   for(j=0;j<11;j++){
-  wickfall[j]=i.wickfall[j];
+  wicket_fall[j]=i.wicket_fall[j];
   player[j]=i.player[j];
   }
 
 extras=i.extras;
 overs=i.overs;
-batsmanfacing=i.batsmanfacing;
-nonstriker=i.nonstriker;
-lastbowler=i.lastbowler;
+batsman_facing=i.batsman_facing;
+non_striker=i.non_striker;
+last_bowler=i.last_bowler;
 declared=i.declared;
 
  return *this; 
 }
 
-int Innings::getovers()
+int Innings::get_overs()
 {
 return overs;
 }
 
-void Innings::changeovers()
+void Innings::change_overs()
 {
 overs++;
 }
 
-int Innings::getbatsmanfacing()
+int Innings::get_batsman_facing()
 {
-return batsmanfacing;
+return batsman_facing;
 }
 
-int Innings::getnonstriker()
+int Innings::get_non_striker()
 {
-return nonstriker;
+return non_striker;
 }
 
-void Innings::setbatsmanfacing(int n)
+void Innings::set_batsman_facing(int n)
 {
-batsmanfacing=n;
+batsman_facing=n;
 }
 
-void Innings::setnonstriker(int n)
+void Innings::set_non_striker(int n)
 {
-nonstriker=n;
+non_striker=n;
 }
 
-void Innings::setlastbowler(int n)
+void Innings::set_last_bowler(int n)
 {
-lastbowler=n;
+last_bowler=n;
 }
 
-int Innings::getlastbowler()
+int Innings::get_last_bowler()
 {
-return lastbowler;
+return last_bowler;
 }
 
-void Innings::setdeclared()
+void Innings::set_declared()
 {
 declared=1;
 }
 
-int Innings::getdeclared()
+int Innings::get_declared()
 {
 return declared;
 }

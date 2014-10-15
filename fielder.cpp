@@ -14,11 +14,11 @@ void Fielder::set_y(int y1){
 y=y1;
 }
 
-int Fielder::get_x(){
+int Fielder::get_x() const{
 return x;
 }
 
-int Fielder::get_y(){
+int Fielder::get_y() const{
 return y;
 }
 
