@@ -3,6 +3,9 @@
 
 using namespace std;
 
+
+
+
 bool test1();
 bool test2();
 bool test3();
@@ -396,6 +399,9 @@ int main(int argc, char **argv)
 int ret=true;
 
 ret = player_test();
+      cout << "\nPASS\n";
+      cout << "\nPASS\n";
+      cout << "\nPASS\n";
 
    if(ret == 0)
    {   
@@ -405,4 +411,6 @@ ret = player_test();
    {
       cout << "\nFAIL\n";
    }
+   cin.get();
 }
+

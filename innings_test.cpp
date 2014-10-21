@@ -171,10 +171,10 @@ ret = innings_test();
 
    if(ret == 0)
    {   
-      cout << "\nPASS\n";
+      std::cout << "\nPASS\n";
    }
    else
    {
-      cout << "\nFAIL\n";
+      std::cout << "\nFAIL\n";
    }
 }
