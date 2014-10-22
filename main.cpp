@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 Game *a = new Screen();
 a->firstscreen();
 
-cout << a->team[0].innings[1].player[4].getname();
+//cout << a->team[0].innings[1].player[4].getname();
 
 cout << "\nhello\n";
 

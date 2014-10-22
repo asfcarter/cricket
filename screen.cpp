@@ -117,7 +117,7 @@ int Screen::firstscreen()
 
 	//Our texture size won't change, so we can get it here
 	//instead of constantly allocating/deleting ints in the loop
-	int iW, iH;
+//	int iW, iH;
 //	SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
 
 	//Our event type

@@ -2,6 +2,7 @@
 <html><head>
 
 
+
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Initial cricket</title></head><body>
 <div style="text-align: center;"><big><big><big>Cricket development</big></big></big><br>
 </div>
@@ -61,7 +62,30 @@ Links to libraries:<br>
 SDL_ttf</a> - needs to be compiled for g++, see <a href="http://te4.org/wiki/How_to_compile">here</a><br>
 This youtube video shows how SDL2 libraries can be compiled and downloaded <a href="https://www.youtube.com/watch?v=pj45FrV7xM8" target="_blank">here</a>.<br>
 <br>
+------<br>
+<br>
 sudo apt-get install g++<br>
 sudo apt-get install ming32<br>
+<br>
+--------<br>
+In GIT how do you baseline something?<br>
+&nbsp;&nbsp;&nbsp; - There should be a baseline at c0d2da6529<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; - Where both programs do some testing
+of player, innings and use cout to write to the window. There was a
+problem with no-output when writing to DOS due to adding a windows a
+compilation flag.<br>
+<br>
+--------<br>
+Installing SDL2<br>
+- This didn't work first time, had to do sudo rm /var/lib/apt/lists/*
+-vf&nbsp;&nbsp;&nbsp;&nbsp; then sudo apt-get update&nbsp;&nbsp;&nbsp;
+before<br>
+sudo apt-get install libsdl2-dev<br>
+sudo apt-get install libsdl2-image-dev<br>
+sudo apt-get install libsdl2-mixer-dev<br>
+
+sudo apt-get install libsdl2-ttf-dev<br>
+
+<br>
 <br>
 </body></html>

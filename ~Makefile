@@ -92,7 +92,7 @@ innings_test: $(OBJECTS_INNINGS_TEST)
 	$(CC) $(LIBS_INNINGS_TEST) $^ -o $@ 
 
 ma.exe: $(OBJECTSW)
-	$(CCW) $^ -o $@ $(LIBSW)
+	$(CCW) $^ $(LIBSW) -o $@ 
 
 ma: $(OBJECTS)
 	$(CC) $^ $(LIBS) -o $@ 
