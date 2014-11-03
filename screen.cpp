@@ -19,8 +19,8 @@
 const int SCREEN_WIDTH  = 640;
 const int SCREEN_HEIGHT = 480;
 //Globals for window and renderer
-SDL_Renderer *renderer = nullptr;
-SDL_Window *window = nullptr;
+SDL_Renderer *renderer = NULL;
+SDL_Window *window = NULL;
 
 /*
 *  Loads an image directly to texture using SDL_image's
@@ -29,9 +29,9 @@ SDL_Window *window = nullptr;
 *  @return SDL_Texture* to the loaded texture
 */
 SDL_Texture* LoadImage(std::string file){
-	SDL_Texture* tex = nullptr;
+	SDL_Texture* tex = NULL;
 	tex = IMG_LoadTexture(renderer, file.c_str());
-	if (tex == nullptr)
+	if (tex == NULL)
 		throw std::runtime_error("Failed to load image: " + file + IMG_GetError());
 	return tex;
 }
@@ -45,9 +45,9 @@ SDL_Texture* LoadImage(std::string file){
 */
 SDL_Texture* RenderText(std::string message, std::string fontFile, SDL_Color color, int fontSize){
 	//Open the font
-	TTF_Font *font = nullptr;
+	TTF_Font *font = NULL;
 	font = TTF_OpenFont(fontFile.c_str(), fontSize);
-	if (font == nullptr)
+	if (font == NULL)
 		throw std::runtime_error("Failed to load font: " + fontFile + TTF_GetError());
 	
 	//Render the message to an SDL_Surface, as that's what TTF_RenderText_X returns
@@ -66,11 +66,12 @@ SDL_Texture* RenderText(std::string message, std::string fontFile, SDL_Color col
 *  @param tex: the source texture we want to draw
 *  @param rend: the renderer we want to draw too
 */
-void ApplySurface(int x, int y, SDL_Color color, const char *text, SDL_Renderer *rend, int size){
+void ApplySurface(int x, int y, const char *text, SDL_Renderer *rend, int size){
 	//First we must create an SDL_Rect for the position of the image, as SDL
 	//won't accept raw coordinates as the image's position
-	SDL_Texture *image = nullptr;
+	SDL_Texture *image = NULL;
 	SDL_Rect pos;
+	SDL_Color color = {255,255,255};
 	
 	try {
 		image = RenderText(text, "./SourceSansPro-Regular.ttf", color, size);
@@ -103,13 +104,13 @@ int Screen::firstscreen()
 	//Setup our window and renderer
 	window = SDL_CreateWindow("Lesson 6", SDL_WINDOWPOS_CENTERED, 
 		SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	if (window == nullptr){
+	if (window == NULL){
 		std::cout << SDL_GetError() << std::endl;
 		return 2;
 	}
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED 
 		| SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == nullptr){
+	if (renderer == NULL){
 		std::cout << SDL_GetError() << std::endl;
 		return 3;
 	}
@@ -135,7 +136,7 @@ int Screen::firstscreen()
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
 				quit = true;
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
-		ApplySurface(10, 40, { 255, 255, 255 },"SPACE", renderer,30);
+		ApplySurface(10, 40,"SPACE", renderer,30);
 
 		}
 		//Rendering
@@ -144,9 +145,9 @@ int Screen::firstscreen()
 //		ApplySurface(10, 20, { 255, 255, 255 },"BLAH!!!!!!!!\nHelllo!!!!", renderer,4);
 //		ApplySurface(10, 50, { 155, 155, 155 },"And another string", renderer,40);
 
-		ApplySurface(10, -60, { 100, 155, 155 },"TEST", renderer,290);
-		ApplySurface(10, 180, { 80, 155, 155 },"MATCH", renderer,210);
-		ApplySurface(10, 440, { 255, 255, 255 },"Press <space> to continue", renderer,30);
+//		ApplySurface(10, -60, { 100, 155, 155 },"TEST", renderer,290);
+//		ApplySurface(10, 180, { 80, 155, 155 },"MATCH", renderer,210);
+//		ApplySurface(10, 440, { 255, 255, 255 },"Press <space> to continue", renderer,30);
 
 		//Update the screen
 		SDL_RenderPresent(renderer);
