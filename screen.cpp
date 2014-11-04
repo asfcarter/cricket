@@ -71,7 +71,7 @@ void ApplySurface(int x, int y, const char *text, SDL_Renderer *rend, int size){
 	//won't accept raw coordinates as the image's position
 	SDL_Texture *image = NULL;
 	SDL_Rect pos;
-	SDL_Color color = {255,255,255};
+	SDL_Color color = {255,255,55};
 	
 	try {
 		image = RenderText(text, "./SourceSansPro-Regular.ttf", color, size);
@@ -123,6 +123,7 @@ int Screen::firstscreen()
 
 	//Our event type
 	SDL_Event e;
+		ApplySurface(10, 40,"SPACE", renderer,30);
 	
 	//For tracking if we want to quit
 	bool quit = false;
@@ -136,7 +137,7 @@ int Screen::firstscreen()
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
 				quit = true;
 			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
-		ApplySurface(10, 40,"SPACE", renderer,30);
+		ApplySurface(0, 0,"SPACE", renderer,30);
 
 		}
 		//Rendering

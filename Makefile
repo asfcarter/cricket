@@ -20,8 +20,9 @@ CFLAGSW=-I/usr/i586-mingw32msvc/SDL2-2.0.3/include/ -c
 CFLAGSWA=-I/usr/i586-mingw32msvc/SDL2-2.0.3/include/
 #CFLAGSW=-I/usr/i586-mingw32msvc/include/SDL2 -Dmain=SDL_main -Wall -c
 #LIBS=-lGL -lglut
-LIBS=-lSDL2 -lGL -lSDL2_image -lSDL2_ttf 
-LIBSW=-D FREEGLUT_STATIC -mwindows  -lwinmm -static -static-libgcc -lmingw32 -lSDL2_image -lSDL2  -lSDL2_ttf  -lmingw32 -lSDL2main -lSDL2 -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc  
+LIBS=-lSDL2 -lGL -lSDL2_image -lSDL2_ttf
+LIBSW=-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc 
+#LIBSW=-D FREEGLUT_STATIC -mwindows  -lwinmm -static -static-libgcc -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc  
 #LIBSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include -lfreeglut_static -lopengl32 -lwinmm -lgdi32
 #LIBSW=-I/usr/i586-mingw32msvc/include/SDL -L -lmingw32 -lSDLmain -lSDL -lwinmm -lgdi32 -mwindows -lm -lopengl32 -glu32 -Wl,-R
 #LIBSW=-I/usr/i586-mingw32msvc/include/SDL2 -static -L/usr/i586-mingw32msvc/bin -lmingw32 -lSDL2main -lSDL2  -mwindows  -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
@@ -29,7 +30,7 @@ LIBSW=-D FREEGLUT_STATIC -mwindows  -lwinmm -static -static-libgcc -lmingw32 -lS
 #SOURCES=test3_sdl2.cpp
 #SOURCES=test1.cpp
 #SOURCES=main.cpp player.cpp innings.cpp team.cpp game.cpp screen.cpp
-SOURCES=main.cpp game.cpp screen1.cpp
+SOURCES=main.cpp game.cpp screen.cpp
 
 all: ma ma.exe
 
