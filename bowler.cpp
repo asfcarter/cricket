@@ -1,12 +1,33 @@
 #include <cstring>
 #include "bowler.h"
 
+Bowler::Bowler(const Bowler &b){
+is_maiden=b.is_maiden;
+overs=b.overs;
+runs_conceeded=b.runs_conceeded;
+wickets=b.wickets;
+maidens=b.maidens;
+bowler_number=b.bowler_number;
+overs_ball=b.overs_ball;
+}
+
+
 void Bowler::change_overs_ball(int r){
   overs_ball++;
-  runs_conceeded+=r;
+  
+  if(r>6)
+  {
+      wickets++;
+  }
+  else
+  {
+      runs_conceeded+=r;
+  }
+
   if(r!=0){
   is_maiden=1;
   }
+
 
     if(overs_ball==6)
     {
@@ -40,10 +61,6 @@ int Bowler::get_runs_conceeded() const{
 return runs_conceeded;
 }
 
-void Bowler::change_wickets(){
-wickets++;
-}
-
 int Bowler::get_wickets() const{
 return wickets;
 }
@@ -54,4 +71,15 @@ bowler_number=num;
 
 int Bowler::get_bowler_number() const{
 return bowler_number;
+}
+
+Bowler & Bowler::operator=(const Bowler &b){
+is_maiden=b.is_maiden;
+overs=b.overs;
+runs_conceeded=b.runs_conceeded;
+wickets=b.wickets;
+maidens=b.maidens;
+bowler_number=b.bowler_number;
+overs_ball=b.overs_ball;
+return *this;
 }

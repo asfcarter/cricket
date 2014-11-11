@@ -143,14 +143,14 @@ bool test5()
 {
 Player a;
 
-    a.set_how_out(4);
-    if(a.get_how_out() != 4)
+    a.change_balls_faced(11);
+    if(a.get_how_out() != 11)
     {
     	return false;
     }
 
-    a.set_how_out(10);
-    if(a.get_how_out() != 10)
+    a.change_balls_faced(15);
+    if(a.get_how_out() != 15)
     {
     	return false;
     }
@@ -224,13 +224,13 @@ return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_c
 bool test10()
 {
 Player a;
-	a.change_wickets();
+	a.change_overs_ball(11);
 	if(a.get_wickets() != 1)
 	{
 		return false;
 	}
 	
-	a.change_wickets();
+	a.change_overs_ball(15);
 	if(a.get_wickets() != 2)
 	{
 		return false;
@@ -399,9 +399,6 @@ int main(int argc, char **argv)
 int ret=true;
 
 ret = player_test();
-      cout << "\nPASS\n";
-      cout << "\nPASS\n";
-      cout << "\nPASS\n";
 
    if(ret == 0)
    {   
@@ -411,6 +408,6 @@ ret = player_test();
    {
       cout << "\nFAIL\n";
    }
-   cin.get();
+   //cin.get();
 }
 

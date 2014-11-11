@@ -22,3 +22,10 @@ int Fielder::get_y() const{
 return y;
 }
 
+Fielder & Fielder::operator=(const Fielder &f){
+x=f.x;
+y=f.y;
+return *this;
+}
+
+

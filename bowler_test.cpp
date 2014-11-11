@@ -30,13 +30,13 @@ return (!(a.get_overs() || a.get_overs_ball() || a.get_maidens() || a.get_runs_c
 bool test2()
 {
 Bowler a;
-	a.change_wickets();
+	a.change_overs_ball(11);
 	if(a.get_wickets() != 1)
 	{
 		return false;
 	}
 	
-	a.change_wickets();
+	a.change_overs_ball(11);
 	if(a.get_wickets() != 2)
 	{
 		return false;

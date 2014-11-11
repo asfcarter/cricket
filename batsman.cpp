@@ -2,6 +2,19 @@
 #include "batsman.h"
 
 
+Batsman::Batsman(const Batsman &b){
+balls_faced=b.balls_faced;
+ones=b.ones;
+twos=b.twos;
+threes=b.threes;
+fours=b.fours;
+sixes=b.sixes;
+runs_scored=b.runs_scored;
+batsman_number=b.batsman_number;
+how_out=b.how_out;
+}
+
+
 void Batsman::change_balls_faced(int r){
 balls_faced++;
 runs_scored+=r;
@@ -19,6 +32,9 @@ runs_scored+=r;
    }
    else if(r==6){
    	sixes++;
+   }
+   else if(r>6){
+        how_out=r;
    }
 }
 
@@ -59,10 +75,19 @@ int Batsman::get_batsman_number() const{
 return batsman_number;
 }
 
-void Batsman::set_how_out(int out){
-how_out=out;
-}
-
 int Batsman::get_how_out() const{
 return how_out;
+}
+
+Batsman & Batsman::operator=(const Batsman &b){
+balls_faced=b.balls_faced;
+ones=b.ones;
+twos=b.twos;
+threes=b.threes;
+fours=b.fours;
+sixes=b.sixes;
+runs_scored=b.runs_scored;
+batsman_number=b.batsman_number;
+how_out=b.how_out;
+return *this;
 }

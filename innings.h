@@ -8,23 +8,23 @@ private:
   int overs;
   int batsman_facing;
   int non_striker;
+  int bowler;
   int last_bowler;
   int declared;
-
-public:
   Player player[11];
+
+  void set_wicket_fall();
 
 public:
   Innings();
   Innings& operator=(const Innings &i);
-  void change_innings_runs(int run, int is_extra);
+  void change_innings_runs(int run, bool is_extra);
   int get_innings_total();
   int get_extras();
   int get_wickets();
-  void set_wicket_fall();
   int get_wicket_fall(int wicket_number);
   int get_overs();
-  void change_overs();
+  void change_balls_bowled();
   int get_batsman_facing();
   int get_non_striker();
   void set_batsman_facing(int);

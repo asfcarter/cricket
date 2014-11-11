@@ -13,8 +13,10 @@ public:
 	       set_name("");
             }
     
-    Player(const Player & p);
-    	    
+    Player(const Player & p):Batsman(p),Bowler(p),Fielder(p){
+		strcpy(name,p.name);
+    }
+	    
     void set_name(const char *n);
     char *get_name();
 };

@@ -51,14 +51,14 @@ bool test3()
 {
 Batsman a;
 
-    a.set_how_out(4);
-    if(a.get_how_out() != 4)
+    a.change_balls_faced(11);
+    if(a.get_how_out() != 11)
     {
     	return false;
     }
 
-    a.set_how_out(10);
-    if(a.get_how_out() != 10)
+    a.change_balls_faced(15);
+    if(a.get_how_out() != 15)
     {
     	return false;
     }

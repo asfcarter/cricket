@@ -8,13 +8,17 @@ bool test2();
 bool test3();
 bool test4();
 bool test5();
+bool test6();
+bool test7();
 
 bool (*test_func_ptr[])() = {
                              	test1, 
-			     				test2, 
-			     				test3,
-			     				test4,
-								test5
+			     	test2, 
+			     	test3,
+			     	test4,
+				test5,
+				test6,
+				test7
                             };
 
 
@@ -82,6 +86,29 @@ Fielder a;
 return (check_x_pos(&a, -15) && check_y_pos(&a, -25));
 }
 
+bool test6()
+{
+Fielder a;
+	a.set_position(-15,-25);
+Fielder b=a;	
+return (check_x_pos(&b, -15) && check_y_pos(&b, -25));
+}
+
+bool test7()
+{
+Fielder a;
+Fielder b;	
+	a.set_position(-15,-25);
+
+
+if(!check_x_pos(&b, 0) || !check_y_pos(&b, 0))
+{
+	return 0;
+}
+
+b=a;	
+return (check_x_pos(&b, -15) && check_y_pos(&b, -25));
+}
 
 
 
@@ -99,6 +126,11 @@ bool ret;
 		if(ret == false)
 		{
 			ret_num++;
+                        cout << "FAIL test " << i+1 << "\n";		
+		}
+		else
+		{
+                        cout << "PASS test " << i+1 << "\n";		
 		}
 	}
 
@@ -113,10 +145,10 @@ ret = fielder_test();
 
    if(ret == 0)
    {   
-      cout << "\nPASS\n";
+      cout << "PASS OVERALL\n";
    }
    else
    {
-      cout << "\nFAIL\n";
+      cout << "FAIL OVERALL\n";
    }
 }

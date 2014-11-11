@@ -38,7 +38,7 @@ int RenderText(std::string message, std::string fontFile, SDL_Color color, int f
 	}	
 	//We need to first render to a surface as that's what TTF_RenderText
 	//returns, then load that surface into a texture
-	SDL_Surface *surf = TTF_RenderText_Blended(font, "HE", color);
+/*	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
 	if (surf == NULL){
 		TTF_CloseFont(font);
 		std::cout << "TTF_RenderText";
@@ -49,7 +49,7 @@ int RenderText(std::string message, std::string fontFile, SDL_Color color, int f
 		std::cout << "CreateTexture";	}
 	//Clean up the surface and font
 	SDL_FreeSurface(surf);
-	TTF_CloseFont(font);
+*/	TTF_CloseFont(font);
 	return 1;
 }
 /*

@@ -17,7 +17,7 @@ CFLAGS=-std=c++0x -Wall -I/usr/include/ -c
 #CFLAGS=-Wall -Dmain=SDL_main -c
 #CFLAGSW=-D FREEGLUT_STATIC -I/usr/i586-mingw32msvc/include/ -Wall -c
 CFLAGSW=-I/usr/i586-mingw32msvc/SDL2-2.0.3/include/ -c
-CFLAGSWA=-I/usr/i586-mingw32msvc/SDL2-2.0.3/include/
+CFLAGSWA=-L/usr/i586-mingw32msvc/lib/ -I/usr/i586-mingw32msvc/SDL2-2.0.3/include/
 #CFLAGSW=-I/usr/i586-mingw32msvc/include/SDL2 -Dmain=SDL_main -Wall -c
 #LIBS=-lGL -lglut
 LIBS=-lSDL2 -lGL -lSDL2_image -lSDL2_ttf
@@ -32,7 +32,7 @@ LIBSW=-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -mwindows -lm -ldinput
 #SOURCES=main.cpp player.cpp innings.cpp team.cpp game.cpp screen.cpp
 SOURCES=main.cpp game.cpp screen.cpp
 
-all: ma ma.exe
+all: ma ma.exe fielder_test bowler_test batsman_test player_test innings_test
 
 # linux_programs windows_programs
 
