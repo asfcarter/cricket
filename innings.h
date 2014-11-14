@@ -24,7 +24,7 @@ public:
   int get_wickets();
   int get_wicket_fall(int wicket_number);
   int get_overs();
-  void change_balls_bowled();
+  void change_balls_bowled(int ball);
   int get_batsman_facing();
   int get_non_striker();
   void set_batsman_facing(int);
@@ -33,4 +33,5 @@ public:
   int get_last_bowler();
   void set_declared();
   int get_declared();
+  char* get_player_name(int player_number);
 };

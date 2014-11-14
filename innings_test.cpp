@@ -55,7 +55,7 @@ bool test2()
 {
 Innings a;
 
-if(strcmp(a.player[0].get_name(),""))
+if(strcmp(a.get_player_name(1),""))
 return false;
 
 return true;

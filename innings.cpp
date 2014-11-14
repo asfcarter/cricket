@@ -12,13 +12,13 @@ declared=innings_total=wickets=extras=overs=0;
 batsman_facing=non_striker=last_bowler=0;
 }
 
-void Innings::change_innings_runs(int run,int is_extra){
+void Innings::change_innings_runs(int run, bool is_extra){
 innings_total+=run;
-  if(is_extra==0){
+  if(is_extra){
   extras+=run;
   }
   else{
-  player[is_extra-1].change_balls_faced(run);
+  player[batsman_facing].change_balls_faced(run);
   }
 }
 
@@ -68,11 +68,6 @@ int Innings::get_overs()
 return overs;
 }
 
-void Innings::change_overs()
-{
-overs++;
-}
-
 int Innings::get_batsman_facing()
 {
 return batsman_facing;
@@ -112,3 +107,9 @@ int Innings::get_declared()
 {
 return declared;
 }
+
+char* Innings::get_player_name(int player_number)
+{
+return player[player_number-1].get_name();
+}
+

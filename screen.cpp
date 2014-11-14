@@ -8,9 +8,6 @@
 #include <SDL2/SDL_ttf.h>
 
 
-
-
-
 /*
 *  Lesson 6: True Type Fonts with SDL_ttf
 */
@@ -29,7 +26,7 @@ const int SCREEN_HEIGHT = 480;
 *  @param fontSize The size we want the font to be
 *  @return An SDL_Texture containing the rendered message
 */
-int RenderText(std::string message, std::string fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer){
+SDL_Texture* RenderText(std::string message, std::string fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer){
 	//Open the font
 	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
 	if (font == NULL){
@@ -38,7 +35,7 @@ int RenderText(std::string message, std::string fontFile, SDL_Color color, int f
 	}	
 	//We need to first render to a surface as that's what TTF_RenderText
 	//returns, then load that surface into a texture
-	SDL_Surface *surf = TTF_RenderText_Blended(font, "HE", color);
+	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
 	if (surf == NULL){
 		TTF_CloseFont(font);
 		std::cout << "TTF_RenderText";
@@ -50,7 +47,7 @@ int RenderText(std::string message, std::string fontFile, SDL_Color color, int f
 	//Clean up the surface and font
 	SDL_FreeSurface(surf);
 	TTF_CloseFont(font);
-	return 1;
+	return texture;
 }
 /*
 *  Draw an SDL_exture to an SDL_Renderer at position x, y
@@ -59,12 +56,11 @@ int RenderText(std::string message, std::string fontFile, SDL_Color color, int f
 *  @param tex: the source texture we want to draw
 *  @param rend: the renderer we want to draw too
 */
-void ApplySurface(int x, int y, const char *text, SDL_Renderer *rend, int size){
+void ApplySurface(int x, int y, SDL_Color color, const char *text, SDL_Renderer *rend, int size){
 	//First we must create an SDL_Rect for the position of the image, as SDL
 	//won't accept raw coordinates as the image's position
-	int image = NULL;
 	SDL_Rect pos;
-	SDL_Color color = {255,255,55,255};
+	SDL_Texture*  image;
 	
 //	try {
 		image = RenderText(text, "./SourceSansPro-Regular.ttf", color, size, rend);
@@ -73,18 +69,18 @@ void ApplySurface(int x, int y, const char *text, SDL_Renderer *rend, int size){
 //		std::cout << e.what() << std::endl;
 //		return 4;
 //	}	
-//	pos.x = x;
-//	pos.y = y;
+	pos.x = x;
+	pos.y = y;
 
-	if(image == NULL) 
+/*	if(image == NULL) 
 	{
 	SDL_SetRenderDrawColor(rend,55,255,255,0);
 	}
 	else
 	{
-	SDL_SetRenderDrawColor(rend,255,255,55,0);
-	}
-	SDL_RenderDrawPoint(rend,100,y+100);
+*/	SDL_SetRenderDrawColor(rend,color.r,color.g,color.b,color.a);
+	
+/*	SDL_RenderDrawPoint(rend,100,y+100);
 	SDL_RenderDrawPoint(rend,100,y+101);
 	SDL_RenderDrawPoint(rend,101,y+100);
 	SDL_RenderDrawPoint(rend,100,y+102);
@@ -93,22 +89,21 @@ void ApplySurface(int x, int y, const char *text, SDL_Renderer *rend, int size){
 	SDL_RenderDrawPoint(rend,103,y+100);
 	SDL_RenderDrawPoint(rend,100,y+104);
 	SDL_RenderDrawPoint(rend,104,y+100);
-
+*/
 
 
 
 	//We also need to query the texture to get its width and height to use
-//	SDL_QueryTexture(image, NULL, NULL, &pos.w, &pos.h);
-//	SDL_RenderCopy(rend, image, NULL, &pos);
+	SDL_QueryTexture(image, NULL, NULL, &pos.w, &pos.h);
+	SDL_RenderCopy(rend, image, NULL, &pos);
 
-//	SDL_DestroyTexture(image);
+	SDL_DestroyTexture(image);
+
 }
 
-int Screen::firstscreen()
-{
-SDL_Renderer *renderer = NULL;
-SDL_Window *window = NULL;
 
+int Screen::init_screen()
+{
 	//Start up SDL and make sure it went ok
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
 		std::cout << SDL_GetError() << std::endl;
@@ -135,21 +130,64 @@ SDL_Window *window = NULL;
 	}
 
 
-	//Our texture size won't change, so we can get it here
-	//instead of constantly allocating/deleting ints in the loop
-//	int iW, iH;
-//	SDL_QueryTexture(image, NULL, NULL, &iW, &iH);
+	return 0;
+}
 
+void SetRenderDrawColor(SDL_Renderer *rend, SDL_Color color)
+{
+	SDL_SetRenderDrawColor(rend,color.r,color.g,color.b,color.a);
+}
+
+int Screen::firstscreen()
+{
 	//Our event type
-	SDL_Event e;
-	SDL_SetRenderDrawColor(renderer,55,255,255,0);
-		ApplySurface(10, 40,"SPACE", renderer,30);
-
-	SDL_SetRenderDrawColor(renderer,255,55,255,0);
-		ApplySurface(10, 80,"SPACE", renderer,30);
-	
+	SDL_Event e;	
 	//For tracking if we want to quit
 	bool quit = false;
+
+		SetRenderDrawColor(renderer,BLACK);
+		SDL_RenderClear(renderer);
+		ApplySurface(10, -60, GREY,"TEST", renderer,290);
+		ApplySurface(10, 180, CYAN,"MATCH", renderer,210);
+		ApplySurface(10, 440, WHITE,"Press <space> to continue", renderer,30);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+
+
+	while (!quit){
+		//Event Polling
+		while (SDL_PollEvent(&e)){
+			//If user presses any key
+			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+			{
+				quit = true;
+				
+			}
+		}
+	}
+	
+        SDL_Delay(500);  // Pause execution for 3000 milliseconds, for example
+
+	return 0;
+}
+
+SDL_Keycode Screen::secondscreen()
+{
+	//Our event type
+	SDL_Event e;	
+	//For tracking if we want to quit
+	bool quit = false;
+	SDL_Keycode key = SDLK_h;
+
+		SetRenderDrawColor(renderer,RED);
+		SDL_RenderClear(renderer);
+		ApplySurface(10, 10, WHITE,"This is an emulated AMSTRAD CPC 464 game from the 1980's", renderer,20);
+		ApplySurface(10, 30, WHITE,"Press Y to use automatic teams or N to manually set", renderer,20);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+
 	while (!quit){
 		//Event Polling
 		while (SDL_PollEvent(&e)){
@@ -157,30 +195,31 @@ SDL_Window *window = NULL;
 			if (e.type == SDL_QUIT)
 				quit = true;
 			//If user presses any key
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
-				quit = true;
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+			//If user presses any key
+			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_y)
 			{
-				SDL_SetRenderDrawColor(renderer,255,55,255,0);
-				ApplySurface(0, 0,"SPACE", renderer,30);
+				key = (SDL_Keycode) e.key.keysym.sym;
+				quit = true;
+			}
+			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_n)
+			{
+				key = (SDL_Keycode) e.key.keysym.sym;
+				quit = true;
 			}
 		}
-		//Rendering
-//		SDL_RenderClear(renderer);
-		//Draw the image
-//		ApplySurface(10, 20, { 255, 255, 255 },"BLAH!!!!!!!!\nHelllo!!!!", renderer,4);
-//		ApplySurface(10, 50, { 155, 155, 155 },"And another string", renderer,40);
 
-//		ApplySurface(10, -60, { 100, 155, 155 },"TEST", renderer,290);
-//		ApplySurface(10, 180, { 80, 155, 155 },"MATCH", renderer,210);
-//		ApplySurface(10, 440, { 255, 255, 255 },"Press <space> to continue", renderer,30);
 
-		//Update the screen
-		SDL_RenderPresent(renderer);
 	}
 	
-        SDL_Delay(1200);  // Pause execution for 3000 milliseconds, for example
+        SDL_Delay(500);  // Pause execution for 3000 milliseconds, for example
 
+	return key;
+}
+
+
+
+int Screen::destroy_screen()
+{
 	//Destroy the various items
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -189,5 +228,4 @@ SDL_Window *window = NULL;
 	
 	return 0;
 }
-
 
