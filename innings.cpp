@@ -113,3 +113,7 @@ char* Innings::get_player_name(int player_number)
 return player[player_number-1].get_name();
 }
 
+void Innings::init_player(const Player &player, int player_number)
+{
+player[player_number-1]=player;
+}

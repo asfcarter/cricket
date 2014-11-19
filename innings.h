@@ -34,4 +34,5 @@ public:
   void set_declared();
   int get_declared();
   char* get_player_name(int player_number);
+  void init_player(const Player &player, int player_number);
 };

@@ -1,11 +1,11 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "game.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "team.h"
 
 #define BLACK (SDL_Color){0,0,0,0}
 #define WHITE (SDL_Color){255,255,255,255}
@@ -16,7 +16,7 @@
 #define GREY (SDL_Color){100,155,155,255}
 #define CYAN (SDL_Color){80,155,155,255}
 
-class Screen: public Game
+class Screen
 {
 private:
 	SDL_Renderer *renderer;
@@ -29,6 +29,8 @@ public:
       int init_screen();
       int firstscreen();
       SDL_Keycode secondscreen();
+      bool toss_screen(Team team[2]);
+      void display_scoreboard(Team batting, Team bowling);
       int destroy_screen();
 };
 

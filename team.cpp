@@ -7,6 +7,7 @@ Team::Team()
 //strcpy(teamname,"               ");
 }
 
+
 char* Team::getteamname()
 {
 return teamname;
@@ -16,7 +17,7 @@ return teamname;
 void Team::setteamcomputer1()
 {
 strcpy(teamname,"England");
-innings[0].player[0].setname("Atherton");
+/*innings[0].player[0].setname("Atherton");
 innings[0].player[1].setname("Knight");
 innings[0].player[2].setname("Hussain");
 innings[0].player[3].setname("Thorpe");
@@ -49,12 +50,13 @@ innings[0].player[9].setposition(245,310);
 
 	
 innings[1]=innings[0];
+*/
 }
 
 void Team::setteamcomputer2()
 {
 strcpy(teamname,"South Africa");
-innings[0].player[0].setname("Kirsten");
+/*innings[0].player[0].setname("Kirsten");
 innings[0].player[1].setname("Gibbs");
 innings[0].player[2].setname("Kallis");
 innings[0].player[3].setname("Cullinan");
@@ -87,6 +89,7 @@ innings[0].player[10].setposition(245,310);
 
 	
 innings[1]=innings[0];
+*/
 }
 
 
@@ -94,4 +97,5 @@ void Team::setteammanual()
 {
 
 }
+
 
