@@ -1,5 +1,6 @@
 #include <cstring>
 #include "batsman.h"
+#include "global.h"
 
 
 Batsman::Batsman(const Batsman &b){
@@ -15,7 +16,7 @@ how_out=b.how_out;
 }
 
 
-void Batsman::change_balls_faced(int r){
+void Batsman::change_balls_faced(int r, int wicket){
 balls_faced++;
 runs_scored+=r;
    if(r==1){
@@ -33,8 +34,9 @@ runs_scored+=r;
    else if(r==6){
    	sixes++;
    }
-   else if(r>6){
-        how_out=r;
+   
+   if(wicket != NOT_OUT){
+        how_out=wicket;
    }
 }
 
@@ -90,4 +92,20 @@ runs_scored=b.runs_scored;
 batsman_number=b.batsman_number;
 how_out=b.how_out;
 return *this;
+}
+
+void Batsman::set_how_out(const int h){
+	how_out=h;
+}
+
+bool Batsman::set_not_out(){
+	if(how_out==DNB)
+	{
+		how_out=NOT_OUT;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

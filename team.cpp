@@ -8,7 +8,7 @@ Team::Team()
 }
 
 
-char* Team::getteamname()
+char* Team::get_team_name()
 {
 return teamname;
 }
@@ -17,79 +17,70 @@ return teamname;
 void Team::setteamcomputer1()
 {
 strcpy(teamname,"England");
-/*innings[0].player[0].setname("Atherton");
-innings[0].player[1].setname("Knight");
-innings[0].player[2].setname("Hussain");
-innings[0].player[3].setname("Thorpe");
-innings[0].player[4].setname("Hick");
-innings[0].player[5].setname("Stewart");
-innings[0].player[6].setname("Flintoff");
-innings[0].player[7].setname("Caddick");
-innings[0].player[8].setname("Gough");
-innings[0].player[9].setname("Croft");
-innings[0].player[10].setname("Mullally");
+player[0].set_name("Atherton");
+player[1].set_name("Knight");
+player[2].set_name("Hussain");
+player[3].set_name("Thorpe");
+player[4].set_name("Hick");
+player[5].set_name("Stewart");
+player[6].set_name("Flintoff");
+player[7].set_name("Caddick");
+player[8].set_name("Gough");
+player[9].set_name("Croft");
+player[10].set_name("Mullally");
 
-innings[0].player[7].changebowlernum(1);
-innings[0].player[8].changebowlernum(2);
-innings[0].player[10].changebowlernum(3);
-innings[0].player[9].changebowlernum(4);
-innings[0].player[6].changebowlernum(5);
-innings[0].player[4].changebowlernum(6);
+player[7].set_bowler_number(1);
+player[8].set_bowler_number(2);
+player[10].set_bowler_number(3);
+player[9].set_bowler_number(4);
+player[6].set_bowler_number(5);
+player[4].set_bowler_number(6);
 
-innings[0].player[0].setposition(220,325);
-innings[0].player[1].setposition(235,340);
-innings[0].player[2].setposition(265,390);
-innings[0].player[3].setposition(310,410);
-innings[0].player[4].setposition(370,370);
-innings[0].player[5].setposition(400,280);
-innings[0].player[6].setposition(330,220);
-innings[0].player[7].setposition(265,230);
-innings[0].player[8].setposition(190,280);
-innings[0].player[9].setposition(245,310);
-
-
-	
-innings[1]=innings[0];
-*/
+player[0].set_position(220,325);
+player[1].set_position(235,340);
+player[2].set_position(265,390);
+player[3].set_position(310,410);
+player[4].set_position(370,370);
+player[5].set_position(400,280);
+player[6].set_position(330,220);
+player[7].set_position(265,230);
+player[8].set_position(190,280);
+player[9].set_position(245,310);
 }
 
 void Team::setteamcomputer2()
 {
 strcpy(teamname,"South Africa");
-/*innings[0].player[0].setname("Kirsten");
-innings[0].player[1].setname("Gibbs");
-innings[0].player[2].setname("Kallis");
-innings[0].player[3].setname("Cullinan");
-innings[0].player[4].setname("Cronje");
-innings[0].player[5].setname("Rhodes");
-innings[0].player[6].setname("Klusneur");
-innings[0].player[7].setname("Pollock");
-innings[0].player[8].setname("Boucher");
-innings[0].player[9].setname("Adams");
-innings[0].player[10].setname("Donald");
+player[0].set_name("Kirsten");
+player[1].set_name("Gibbs");
+player[2].set_name("Kallis");
+player[3].set_name("Cullinan");
+player[4].set_name("Cronje");
+player[5].set_name("Rhodes");
+player[6].set_name("Klusneur");
+player[7].set_name("Pollock");
+player[8].set_name("Boucher");
+player[9].set_name("Adams");
+player[10].set_name("Donald");
 
-innings[0].player[10].changebowlernum(1);
-innings[0].player[7].changebowlernum(2);
-innings[0].player[9].changebowlernum(3);
-innings[0].player[6].changebowlernum(4);
-innings[0].player[2].changebowlernum(5);
-innings[0].player[4].changebowlernum(6);
+player[10].set_bowler_number(1);
+player[7].set_bowler_number(2);
+player[9].set_bowler_number(3);
+player[6].set_bowler_number(4);
+player[2].set_bowler_number(5);
+player[4].set_bowler_number(6);
 
-innings[0].player[0].setposition(220,325);
-innings[0].player[1].setposition(235,340);
-innings[0].player[2].setposition(265,390);
-innings[0].player[3].setposition(310,410);
-innings[0].player[4].setposition(370,370);
-innings[0].player[5].setposition(400,280);
-innings[0].player[6].setposition(330,220);
-innings[0].player[7].setposition(265,230);
-innings[0].player[8].setposition(190,280);
-innings[0].player[9].setposition(245,310);
-innings[0].player[10].setposition(245,310);
-
-	
-innings[1]=innings[0];
-*/
+player[0].set_position(220,325);
+player[1].set_position(235,340);
+player[2].set_position(265,390);
+player[3].set_position(310,410);
+player[4].set_position(370,370);
+player[5].set_position(400,280);
+player[6].set_position(330,220);
+player[7].set_position(265,230);
+player[8].set_position(190,280);
+player[9].set_position(245,310);
+player[10].set_position(245,310);	
 }
 
 
@@ -98,4 +89,16 @@ void Team::setteammanual()
 
 }
 
+int Team::get_bowler_player_number(const int bowler_number) const{
+int player_num;
 
+	for(player_num=1;player_num<12;player_num++)
+	{				
+		if(player[player_num-1].get_bowler_number()==bowler_number)
+		{
+			break;
+		}
+	}
+	
+return player_num;
+}

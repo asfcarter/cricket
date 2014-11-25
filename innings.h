@@ -1,4 +1,8 @@
-#include "player.h"
+#ifndef INNINGS_H
+#define INNINGS_H
+
+#include "batsman.h"
+#include "bowler.h"
 
 class Innings
 {
@@ -8,31 +12,43 @@ private:
   int overs;
   int batsman_facing;
   int non_striker;
-  int bowler;
+  int current_bowler;
   int last_bowler;
   int declared;
-  Player player[11];
+  Batsman batsman[11];
+  Bowler bowler[6];
+  int ball;
+  int num_batsman_selected;
 
   void set_wicket_fall();
 
+  void set_declared();
+  void set_batsman_facing(int player_number);
+  void set_non_striker(int player_number);
+  void set_last_bowler(int bowler_number);
+  void set_current_bowler(int bowler_number);
+  
 public:
   Innings();
   Innings& operator=(const Innings &i);
-  void change_innings_runs(int run, bool is_extra);
+  void change_innings_runs(int run, bool is_extra, int wicket);
   int get_innings_total();
   int get_extras();
   int get_wickets();
   int get_wicket_fall(int wicket_number);
   int get_overs();
-  void change_balls_bowled(int ball);
-  int get_batsman_facing();
-  int get_non_striker();
-  void set_batsman_facing(int);
-  void set_non_striker(int);
-  void set_last_bowler(int);
+  int get_balls() const;
+  int get_batsman_facing() const;  
+  int get_non_striker() const;
   int get_last_bowler();
-  void set_declared();
+  int get_current_bowler() const;
   int get_declared();
-  char* get_player_name(int player_number);
-  void init_player(const Player &player, int player_number);
+  int get_player_number(const int batsman_number) const;
+  int get_batsman_how_out(const int batsman_number) const;
+  int get_batsman_runs(const int batsman_num) const;
+  bowler_info get_bowler_info(const int bowler_num) const; 
+  bool set_new_batsman(const int player_number);
+  bool set_new_bowler(const int bowler_number);
 };
+
+#endif

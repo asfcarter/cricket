@@ -12,8 +12,8 @@ class Game : public Screen
 private:
  //  double gamespeed;
    bool toss_change; //if 0 team[0] bat first, if 1 team[1] bats first
- //  int inningsnumber;
- //  int followon;
+   int innings_number;
+   int follow_on;
 //	int shotarray[ARRAYSIZE][2];
 //	int viewplayer;
 //	int ballx,bally;
@@ -22,6 +22,8 @@ public:
 	Team team[2];
 
         Game();
+	bool run();
+	~Game();
 //        virtual int firstscreen()=0;  
 };
 

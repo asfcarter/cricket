@@ -1,5 +1,6 @@
 #include <cstring>
 #include "bowler.h"
+#include "global.h"
 
 Bowler::Bowler(const Bowler &b){
 is_maiden=b.is_maiden;
@@ -7,31 +8,28 @@ overs=b.overs;
 runs_conceeded=b.runs_conceeded;
 wickets=b.wickets;
 maidens=b.maidens;
-bowler_number=b.bowler_number;
 overs_ball=b.overs_ball;
 }
 
 
-void Bowler::change_overs_ball(int r){
+int Bowler::change_overs_ball(int r, int wicket){
   overs_ball++;
   
-  if(r>6)
+  if(wicket!=NOT_OUT)
   {
       wickets++;
   }
-  else
-  {
-      runs_conceeded+=r;
-  }
+  
+  runs_conceeded+=r;
 
   if(r!=0){
   is_maiden=1;
   }
 
 
-    if(overs_ball==6)
+    if(overs_ball==7)
     {
-    	overs_ball=0;
+    	overs_ball=1;
     	overs++;
 
     	if(is_maiden==0)
@@ -43,6 +41,8 @@ void Bowler::change_overs_ball(int r){
 		is_maiden=0;
 	}
     }
+    
+return overs_ball;    
 }
 
 int Bowler::get_overs_ball() const{
@@ -65,21 +65,22 @@ int Bowler::get_wickets() const{
 return wickets;
 }
 
-void Bowler::set_bowler_number(int num){
-bowler_number=num;
-}
-
-int Bowler::get_bowler_number() const{
-return bowler_number;
-}
-
 Bowler & Bowler::operator=(const Bowler &b){
 is_maiden=b.is_maiden;
 overs=b.overs;
 runs_conceeded=b.runs_conceeded;
 wickets=b.wickets;
 maidens=b.maidens;
-bowler_number=b.bowler_number;
 overs_ball=b.overs_ball;
 return *this;
 }
+
+bowler_info Bowler::get_info() const{
+bowler_info temp;
+	temp.overs=get_overs();
+	temp.maidens=get_maidens();
+	temp.runs_conceeded=get_runs_conceeded();
+	temp.wickets=get_wickets();
+return temp;
+}
+

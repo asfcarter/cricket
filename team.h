@@ -1,25 +1,25 @@
 #ifndef TEAM_H
 #define TEAM_H
 
-//#include "innings.h"
+#include "innings.h"
 #include "player.h"
 
 class Team
 {
 private:
-    char teamname[12];
-//    Innings innings[2];
+    char teamname[20];
 
 public:
-  //  Player player[11];
+    Player player[11];
+    Innings innings[2];
 
     Team();
     void setteamcomputer1();
     void setteamcomputer2();
     void setteammanual();
-    char* getteamname();
+    char* get_team_name();
 
-
+    int get_bowler_player_number(const int bowler_number) const;
 };
 
 #endif

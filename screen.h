@@ -30,7 +30,30 @@ public:
       int firstscreen();
       SDL_Keycode secondscreen();
       bool toss_screen(Team team[2]);
-      void display_scoreboard(Team batting, Team bowling);
+      void display_scoreboard(Team *batting, Team *bowling, int innings_number);
+      void display_new_bowler(Team *batting, Team *bowling, int innings_number);
+      void display_new_batsman(Team *batting, Team *bowling, int innings_number);
+
+      void display_ball_field(Team *batting, Team *bowling, int innings_num);
+      bool play_again();
+      
+      void boundary();
+      void wickets(int i,int j);
+      void brokenwicket(int i,int j);
+      void batsmanready();
+      void batsmannonstrike(int i,int j);
+      void batsmanshot(int stumped);
+      void wicketkeeper(int i,int j);
+      void fielderready(int i,int j,int selected);
+      void fieldergo(int i,int j);
+      void fielderrun(int i,int j);
+      void bowlerbowled(int i,int j);
+      void bowler(int i,int j);
+      void spacebar_to_continue(int i, int j, SDL_Color text_colour, int text_size);
+
+      void get_batsman_number(int i, int j, SDL_Color text_colour, int text_size);
+
+      void arc(int x,int y,int start_angle,int end_angle,int radius);
       int destroy_screen();
 };
 
