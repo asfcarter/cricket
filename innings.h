@@ -46,7 +46,8 @@ public:
   int get_player_number(const int batsman_number) const;
   int get_batsman_how_out(const int batsman_number) const;
   int get_batsman_runs(const int batsman_num) const;
-  bowler_info get_bowler_info(const int bowler_num) const; 
+  bowler_info get_bowler_info(const int bowler_num) const;
+  int get_bowler_overs(const int bowler_num) const; 
   bool set_new_batsman(const int player_number);
   bool set_new_bowler(const int bowler_number);
 };

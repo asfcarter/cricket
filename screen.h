@@ -36,7 +36,13 @@ public:
 
       void display_ball_field(Team *batting, Team *bowling, int innings_num);
       bool play_again();
-      
+      bool match_summary_screen(Team *batting, Team *bowling, int innings_number, int follow_on);
+      void shot(int shot_number, int *ballx, int *bally);
+      bool follow_on_decision(Team *batting, Team *bowling);
+      int closestfielder(Team *team, int ballx, int bally);
+      int closestwicket(int ballx, int bally);
+      void run(Team *team, int innings_num, int extratag, int closest_field, int ballx, int bally);
+
       void boundary();
       void wickets(int i,int j);
       void brokenwicket(int i,int j);

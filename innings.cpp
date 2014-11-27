@@ -17,6 +17,7 @@ batsman_facing=non_striker=current_bowler=last_bowler=0;
 
 void Innings::change_innings_runs(int run, bool is_extra, int wicket){
 int temp;
+int run_temp=run;
 
   innings_total+=run;
 
@@ -36,10 +37,11 @@ int temp;
 	batsman[batsman_facing-1].change_balls_faced(run,NOT_OUT);
   	batsman[non_striker-1].set_how_out(RUN_OUT);  
 	set_non_striker(0);
+	ball=bowler[current_bowler-1].change_overs_ball(run,NOT_OUT);
   }
   else
   {
-  	if((wicket!=NOT_OUT)||(wicket!=RUN_OUT))
+  	if((wicket!=NOT_OUT)&&(wicket!=RUN_OUT))
 	{
 		wicket+=(current_bowler*10);
 	}
@@ -50,9 +52,29 @@ int temp;
 	{
 		set_batsman_facing(0);
 	}
+
+	if(wicket==RUN_OUT)
+	{
+		ball=bowler[current_bowler-1].change_overs_ball(run,NOT_OUT);
+	}
+	else
+	{
+		ball=bowler[current_bowler-1].change_overs_ball(run,wicket);
+	}
   }
 
-  ball=bowler[current_bowler-1].change_overs_ball(run, wicket);
+
+  if((wicket==RUN_OUT)||(wicket==RUN_OUT_NON_STRIKER))
+  {
+  	run_temp++;
+  }
+  
+  if(run_temp%2==1)
+  {
+  	temp=get_batsman_facing();
+        set_batsman_facing(get_non_striker());
+        set_non_striker(temp);
+  }
   
   if(ball==1)
   {
@@ -272,3 +294,7 @@ bool Innings::set_new_bowler(const int bowler_number)
 return true;
 }
 
+int Innings::get_bowler_overs(const int bowler_num) const
+{
+	return bowler[bowler_num-1].get_overs();
+} 

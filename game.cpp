@@ -1,6 +1,7 @@
 #include <iostream>
 #include "game.h"
 #include "global.h"
+#include "shot.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ Game::Game(){
 
 bool Game::run(){
 SDL_Keycode ret_val;
-
+bool match_over;
 
 //	firstscreen();
 	ret_val=secondscreen();
@@ -58,7 +59,6 @@ SDL_Keycode ret_val;
 //	2              |     1       |   1       | 1  | 1
 //	3              |     1       |   1       | 0  | 1
 
-
 	do{
 
 		while(!((team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_declared()) || (team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_wickets()==10) || ((team[toss_change].innings[0].get_innings_total()-team[toss_change].innings[0].get_innings_total()+team[(toss_change+follow_on)%2].innings[1].get_innings_total()-team[!(toss_change+follow_on)%2].innings[1].get_innings_total()<0)&&(innings_number==3))))
@@ -76,7 +76,6 @@ display_new_bowler(&team[((toss_change+innings_number+follow_on)%2)],&team[!((to
 else
 {
       display_ball_field(&team[((toss_change+innings_number+follow_on)%2)],&team[!((toss_change+innings_number+follow_on)%2)],innings_number/2);
-team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].change_innings_runs(2,1,1);
 }
 
 			if(team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_wickets()==10)
@@ -88,15 +87,20 @@ team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].chang
 
 		}
 		
+		match_over=match_summary_screen(&team[toss_change],&team[!toss_change],innings_number,follow_on);	
 
-		if((innings_number==1)&&(team[toss_change].innings[0].get_innings_total() > (team[toss_change].innings[0].get_innings_total()+200)))
+		if((innings_number==1)&&(team[toss_change].innings[0].get_innings_total() > (team[!toss_change].innings[0].get_innings_total()+200)))
 		{
 			//Do you want to enforce follow on?
-			follow_on=1;
+			follow_on=follow_on_decision(&team[toss_change],&team[!toss_change]);
+		}
+		else
+		{
+	 		spacebar_to_continue(30,420,WHITE,15);
 		}
 		
 		innings_number++;
-	}while(innings_number!=4);
+	}while(!match_over);
 
 return play_again();
 }

@@ -30,7 +30,7 @@ LIBSW=-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -mwindows -lm -ldinput
 #SOURCES=test3_sdl2.cpp
 #SOURCES=test1.cpp
 #SOURCES=main.cpp player.cpp innings.cpp team.cpp game.cpp screen.cpp
-SOURCES=main.cpp game.cpp screen.cpp team.cpp player.cpp fielder.cpp innings.cpp bowler.cpp batsman.cpp
+SOURCES=main.cpp game.cpp screen.cpp team.cpp player.cpp fielder.cpp innings.cpp bowler.cpp batsman.cpp shot.cpp
 
 all: ma ma.exe fielder_test bowler_test batsman_test player_test innings_test
 

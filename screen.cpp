@@ -3,8 +3,10 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <cstdlib>
 #include "screen.h"
 #include "global.h"
+#include "shot.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -602,7 +604,6 @@ void Screen::fielderready(int i,int j,int selected)
 
 void Screen::wicketkeeper(int i,int j)
 {
-	SetRenderDrawColor(renderer,RED);    //setcolor(2);
 	fielderready(245,310,0);
 	SDL_RenderDrawLine(renderer,i,j,i,j);
 	SDL_RenderDrawLine(renderer,i,j-12,i,j-9);
@@ -731,6 +732,10 @@ void Screen::display_ball_field(Team *batting, Team *bowling, int innings_num)
 int text_size=15;
 char change_str[20];
 SDL_Rect rect;
+int shotnumber;
+int ballx,bally;
+bool extratag=0;
+int closefielder;
 
 	SetRenderDrawColor(renderer,GREEN);
 	SDL_RenderClear(renderer);
@@ -826,27 +831,22 @@ outtextxy(30,120,"Needed to win");
 
 
 
-/*
-if(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()==6)
-shotnumber=2-team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[bowlernum].getovers()/8;
-else if(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()==5)
-shotnumber=0;
-else if(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()==4)
-shotnumber=(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[bowlernum].getovers()/10)-1;
-else if(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()==3)
-shotnumber=abs(1-(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[bowlernum].getovers()/5))-1;
-else if(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()==2)
-shotnumber=abs(1-(team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[bowlernum].getovers()/4))-1;
+
+if(batting->innings[innings_num].get_current_bowler()==6)
+	shotnumber=2-batting->innings[innings_num].get_bowler_overs(6)/8;
+else if(batting->innings[innings_num].get_current_bowler()==5)
+	shotnumber=0;
+else if(batting->innings[innings_num].get_current_bowler()==4)
+	shotnumber=(batting->innings[innings_num].get_bowler_overs(4)/10)-1;
+else if(batting->innings[innings_num].get_current_bowler()==3)
+	shotnumber=abs(1-(batting->innings[innings_num].get_bowler_overs(3)/5))-1;
+else if(batting->innings[innings_num].get_current_bowler()==2)
+	shotnumber=abs(1-(batting->innings[innings_num].get_bowler_overs(2)/4))-1;
 else
-shotnumber=team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[bowlernum].getovers()/6;
-shotnumber=shotnumber+team[(1+inningsnumber+tosschange+followon)%2].innings[inningsnumber].player[bowlernum].getbowlernum()-1-abs(team[(inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].getbatsmanfacing()-1-2)-abs(2-((team[(inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].player[team[(inningsnumber+tosschange+followon)%2].innings[inningsnumber/2].getbatsmanfacing()].getrunsscored()+7)/17));
+	shotnumber=batting->innings[innings_num].get_bowler_overs(1)/6;
+
+shotnumber=shotnumber+batting->innings[innings_num].get_current_bowler()-2-abs(batting->innings[innings_num].get_player_number(batting->innings[innings_num].get_batsman_facing())-1-2)-abs(2-((batting->innings[innings_num].get_batsman_runs(batting->innings[innings_num].get_batsman_facing())+7)/17));
 //printf("%i\n",shotnumber);
-
-shot(shotnumber);
-*/
-
-
-
 
 
 	SetRenderDrawColor(renderer,GREEN);
@@ -854,13 +854,16 @@ shot(shotnumber);
 	SetRenderDrawColor(renderer,WHITE);
 	batsmanshot(0);
 
+	shot(shotnumber,&ballx,&bally);
 
+	closefielder=closestfielder(batting,ballx,bally);
 
+//cout << closefielder << " " << ballx << " " << bally << "\n";
 
-
-//	if((ballx<200)&&(bally<360)&&(bally>290)&&(random(3)==0))
-//	{
-//		extratag=0;
+	if((ballx<200)&&(bally<360)&&(bally>290)&&((rand() % 3)==0))
+	{
+		SetRenderDrawColor(renderer,WHITE);
+		extratag=1;
 		rect.x = 260;
 		rect.y = 110;
 		rect.w = 50;
@@ -868,18 +871,178 @@ shot(shotnumber);
 		SDL_RenderFillRect(renderer,&rect);
 		
 		ApplySurface(260,108,BLACK,"EXTRAS",renderer,text_size);
-//	}	
+	}	
 
+	if((bally>450)||(bally<160)||(ballx<30)||(ballx>580)||((100-ballx)+(230-bally)>70)||((100-ballx)+(bally-380)>70)||((ballx-510)+(230-bally)>70)||((ballx-510)+(bally-380)>70))
+	{
+		SetRenderDrawColor(renderer,WHITE);  //setcolor(63);            //make colour go back to default white
+		rect.x = 260;
+		rect.y = 110;
+		rect.w = 50;
+		rect.h = 15;
+		SDL_RenderFillRect(renderer,&rect);
+	
+		if((rand() % 11)==0)
+		{
+			ApplySurface(260,108,BLACK,"6-RUNS",renderer,text_size);
 
+			batting->innings[innings_num].change_innings_runs(6,extratag,NOT_OUT);
+		}
+		else
+		{
+			ApplySurface(260,108,BLACK,"4-RUNS",renderer,text_size);
+			batting->innings[innings_num].change_innings_runs(4,extratag,NOT_OUT);
+		}
+//pause(200);
+//continue;
+	//Update the screen
+	SDL_RenderPresent(renderer);
+
+        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+
+	}
+	else if((ballx==245)&&(bally==310))       //If wicketkeeper takes ball
+	{
+                		if((rand()%(160-(6*(abs(batting->innings[innings_num].get_player_number(batting->innings[innings_num].get_batsman_facing())-3)))))==0)  //should be 140
+		{
+			batting->innings[innings_num].change_innings_runs(0,0,STUMPED);
+			SetRenderDrawColor(renderer,GREEN);
+			wickets(250,300);
+			batsmanshot(0);
+			SetRenderDrawColor(renderer,WHITE);
+			batsmanshot(1);
+			brokenwicket(250,300);
+			for(int i=0;i<10;i++)
+			{			
+				wicketkeeper(bowling->player[i].get_x(),bowling->player[i].get_y());
+			}
+
+			rect.x = 260;
+			rect.y = 110;
+			rect.w = 147;
+			rect.h = 15;
+			SDL_RenderFillRect(renderer,&rect);
+		
+			ApplySurface(260,108,BLACK,"PLAYER OUT STUMPED",renderer,text_size);
+
+			//Update the screen
+			SDL_RenderPresent(renderer);
+
+		        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+		}
+		else if(rand()%(85-(4*(abs(batting->innings[innings_num].get_player_number(batting->innings[innings_num].get_batsman_facing())-3))))==0)
+		{
+			batting->innings[innings_num].change_innings_runs(0,0,CAUGHT);
+			for(int i=0;i<10;i++)
+			{
+				wicketkeeper(bowling->player[i].get_x(),bowling->player[i].get_y());
+			}
+
+			rect.x = 260;
+			rect.y = 110;
+			rect.w = 147;
+			rect.h = 15;
+			SDL_RenderFillRect(renderer,&rect);
+		
+			ApplySurface(260,108,BLACK,"PLAYER OUT CAUGHT KEEPER",renderer,text_size);
+
+			//Update the screen
+			SDL_RenderPresent(renderer);
+
+		        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+		}
+		else
+		{
+			batting->innings[innings_num].change_innings_runs(0,0,NOT_OUT);
+	 		wicketkeeper(245,310);
+			rect.x = 260;
+			rect.y = 110;
+			rect.w = 104;
+			rect.h = 15;
+			SDL_RenderFillRect(renderer,&rect);
+		
+			ApplySurface(260,108,BLACK,"WICKET KEEPER",renderer,text_size);
+
+			//Update the screen
+			SDL_RenderPresent(renderer);
+
+		        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+		}
+	}
+	else if((ballx==250)&&(bally==310))
+	{
+		batting->innings[innings_num].change_innings_runs(0,0,BOWLED);
+		for(int i=0;i<10;i++)
+		{
+			wicketkeeper(bowling->player[i].get_x(),bowling->player[i].get_y());
+		}
+
+		SetRenderDrawColor(renderer,GREEN);
+		wickets(250,300);
+		SetRenderDrawColor(renderer,WHITE);
+		brokenwicket(250,300);
+
+		rect.x = 260;
+		rect.y = 110;
+		rect.w = 116;
+		rect.h = 15;
+		SDL_RenderFillRect(renderer,&rect);
+		
+		ApplySurface(260,108,BLACK,"WICKET - BOWLED",renderer,text_size);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+	        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+	}
+        else if((ballx==260)&&(bally==310))
+	{
+		batting->innings[innings_num].change_innings_runs(0,0,LBW);
+		for(int i=0;i<10;i++)
+		{
+			wicketkeeper(bowling->player[i].get_x(),bowling->player[i].get_y());
+		}
+
+		rect.x = 260;
+		rect.y = 110;
+		rect.w = 101;
+		rect.h = 15;
+		SDL_RenderFillRect(renderer,&rect);
+		
+		ApplySurface(260,108,BLACK,"WICKET - L.B.W.",renderer,text_size);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+	        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+	}		
+	else if((rand()%(80-(9*(abs(batting->innings[innings_num].get_player_number(batting->innings[innings_num].get_batsman_facing())-3))))==0)&&(batting->player[closefielder].get_x()==ballx)&&(batting->player[closefielder].get_y()==bally))
+	{
+		batting->innings[innings_num].change_innings_runs(0,0,CAUGHT);
+		for(int i=0;i<10;i++)
+		{
+			wicketkeeper(bowling->player[i].get_x(),bowling->player[i].get_y());
+		}
+
+		rect.x = 260;
+		rect.y = 110;
+		rect.w = 191;
+		rect.h = 15;
+		SDL_RenderFillRect(renderer,&rect);
+		
+		ApplySurface(260,108,BLACK,"WICKET - PLAYER OUT CAUGHT FIELDER",renderer,text_size);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+	        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+	}
+	else
+	{
+		run(batting,innings_num,extratag,closefielder,ballx,bally);
 
 
 		//Update the screen
 		SDL_RenderPresent(renderer);
-
-
-
-
-        SDL_Delay(2000);  // Pause execution for 3000 milliseconds, for example
+	        SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+	}
 }
 
 
@@ -895,7 +1058,7 @@ bool quit = false;
 	SetRenderDrawColor(renderer,RED);
 	SDL_RenderClear(renderer);
 	
-	ApplySurface(20,20,BLACK,"Do you want to play again? (Y/N)",renderer,text_size);
+	ApplySurface(20,20,WHITE,"Do you want to play again? (Y/N)",renderer,text_size);
 	SDL_RenderPresent(renderer);
 
 	while (!quit){
@@ -914,8 +1077,8 @@ bool quit = false;
 			}
 			else if(e.type == SDL_KEYDOWN)
 			{
-				ApplySurface(20,20,BLACK,"Do you want to play again? (Y/N)",renderer,text_size);
-				ApplySurface(20,50,BLACK,"BAD KEY!!!TRY AGAIN",renderer,text_size);
+				ApplySurface(20,20,WHITE,"Do you want to play again? (Y/N)",renderer,text_size);
+				ApplySurface(20,50,WHITE,"BAD KEY!!!TRY AGAIN",renderer,text_size);
 				SDL_RenderPresent(renderer);
 			}
 		}
@@ -1094,3 +1257,437 @@ bool ret_val;
 	}
 }
  
+
+void Screen::shot(int shot_number, int *ballx, int *bally)
+{
+int shot_random_number;
+SDL_Rect rect;
+
+  	/* generate secret number between 0 and 400: */
+  	shot_random_number = rand() % 401;
+ 
+	shot_random_number=shot_random_number+shot_number;
+	if(shot_random_number<0)
+	{
+		shot_random_number=0;
+	}
+	
+	*ballx=shot_array[shot_random_number][0];
+	*bally=shot_array[shot_random_number][1];
+	
+	if((*ballx==245&&*bally==310)||(*ballx==250&&*bally==310)||(*ballx==260&&*bally==310))
+	{
+	  return;
+	}
+	
+		SetRenderDrawColor(renderer,RED);
+		SDL_RenderDrawLine(renderer,265,305,*ballx,*bally);
+		SDL_RenderPresent(renderer);
+
+		SDL_Delay(50);  // Pause execution for 3000 milliseconds, for example
+		SetRenderDrawColor(renderer,GREEN);
+		SDL_RenderDrawLine(renderer,265,305,*ballx,*bally);
+
+		rect.x = *ballx;
+		rect.y = *bally;
+		rect.w = 2;
+		rect.h = 2;
+		SetRenderDrawColor(renderer,RED);
+		SDL_RenderDrawRect(renderer,&rect);
+		SDL_RenderPresent(renderer);
+}
+
+
+
+bool Screen::match_summary_screen(Team *batting, Team *bowling, int innings_number,int follow_on)
+{
+int i;
+Team *team,*team2;
+int text_size=15;
+char change_str[4];
+bool ret_val=false;
+
+	SetRenderDrawColor(renderer,RED);
+	SDL_RenderClear(renderer);
+	
+	for(i=0;i<innings_number+1;i++)
+	{
+	 if((i==0)||((i==2)&&(!follow_on))||((i==3)&&(follow_on)))
+	 {
+	 	team=batting;
+	 }
+	 else
+	 {
+	 	team=bowling;
+	 }
+
+	 ApplySurface(30,50+(i*50), WHITE,team->get_team_name(), renderer,text_size);
+	 sprintf(change_str,"%i",(i+2)/2);
+	 ApplySurface(150,50+(i*50), WHITE,change_str, renderer,text_size);
+	 
+	 ApplySurface(180,50+(i*50), WHITE,"INNINGS", renderer,text_size);
+	 sprintf(change_str,"%i",team->innings[i/2].get_innings_total());
+	 ApplySurface(30,65+(i*50), WHITE,change_str, renderer,text_size);
+
+	 if(team->innings[i/2].get_wickets()==10)
+	 {
+		ApplySurface(70,65+(i*50), WHITE,"All Out", renderer,text_size);
+	 }
+	 else
+	 {
+		ApplySurface(70,65+(i*50), WHITE,"For", renderer,text_size);
+		sprintf(change_str,"%i",team->innings[i/2].get_wickets());
+		ApplySurface(100,65+(i*50), WHITE,change_str, renderer,text_size);
+		ApplySurface(130,65+(i*50), WHITE,"Declared", renderer,text_size);
+	 }
+	}				
+
+	if(innings_number==2)
+	{
+	 if(follow_on)
+	 {
+	 	team=bowling;
+		team2=batting;
+	 }
+	 else
+	 {
+	 	team=batting;
+		team2=bowling;
+	 }
+
+	 if((team2->innings[0].get_innings_total()-team->innings[0].get_innings_total()-team->innings[1].get_innings_total()>0))
+	 {
+	 	
+			ApplySurface(50,190, WHITE,team2->get_team_name(), renderer,text_size);
+			ApplySurface(140,190, WHITE,"win by an Innings and", renderer,text_size);
+	sprintf(change_str,"%i",team2->innings[0].get_innings_total()-team->innings[0].get_innings_total()-team->innings[1].get_innings_total());
+			ApplySurface(340,190, WHITE,change_str, renderer,text_size);
+			ApplySurface(370,190, WHITE,"runs", renderer,text_size);
+		ret_val=true;
+	 }
+	}
+
+
+	if(innings_number==3)
+	{
+
+			if((batting->innings[0].get_innings_total()+batting->innings[1].get_innings_total()-bowling->innings[0].get_innings_total()-bowling->innings[1].get_innings_total())<0)
+		{
+			ApplySurface(50,280, WHITE,bowling->get_team_name(), renderer,text_size);
+			ApplySurface(140,280, WHITE,"win by", renderer,text_size);
+			sprintf(change_str,"%i",10-bowling->innings[1].get_wickets());
+			ApplySurface(200,280, WHITE,change_str, renderer,text_size);
+			ApplySurface(230,280, WHITE,"wickets", renderer,text_size);
+		}
+		else if(bowling->innings[1].get_wickets()==10)
+		{
+			ApplySurface(50,280, WHITE,batting->get_team_name(), renderer,text_size);
+			ApplySurface(140,280, WHITE,"win by", renderer,text_size);
+	sprintf(change_str,"%i",batting->innings[0].get_innings_total()+batting->innings[1].get_innings_total()-bowling->innings[0].get_innings_total()-bowling->innings[1].get_innings_total());
+			ApplySurface(200,280, WHITE,change_str, renderer,text_size);
+			ApplySurface(230,280, WHITE,"runs", renderer,text_size);
+		}
+		else
+		{
+			ApplySurface(50,280, WHITE,"MATCH DRAWN", renderer,text_size);
+		}
+		
+		ret_val=true;
+	}
+
+
+return ret_val;
+}
+
+
+bool Screen::follow_on_decision(Team *batting, Team *bowling)
+{
+SDL_Keycode decision;
+//Our event type
+SDL_Event e;	
+//For tracking if we want to quit
+bool quit = false;
+int text_size=15;
+char change_str[4];
+
+	 ApplySurface(50,145, WHITE,batting->get_team_name(), renderer,text_size);
+	 ApplySurface(140,145, WHITE,"you lead by", renderer,text_size);
+	 sprintf(change_str,"%i",batting->innings[0].get_innings_total()-bowling->innings[0].get_innings_total());
+	 ApplySurface(260,145, WHITE,change_str, renderer,text_size);
+	 ApplySurface(50,160, WHITE,"Press 'Y'to enforce the followon 'N' to batt", renderer,text_size);
+
+	 SDL_RenderPresent(renderer);
+
+		quit=false;
+		while (!quit){
+			//Event Polling
+			while (SDL_PollEvent(&e)){
+				//If user presses any key
+				if (e.type == SDL_KEYDOWN && ((e.key.keysym.sym == SDLK_y)||(e.key.keysym.sym == SDLK_n)))
+				{
+					quit = true;
+					decision=e.key.keysym.sym;
+				}
+			}
+		}
+
+	if(decision==SDLK_y)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;		
+	}	 
+}
+
+int Screen::closestfielder(Team *team, int ballx, int bally)
+{
+unsigned long distance=500,old_distance=500;
+int closefield=0,i;
+	for(i=0;i<9;i++)
+	{
+	 distance=(sqrt((double)
+				(  ((abs(team->player[i].get_x()-ballx))/10) * ((abs(team->player[i].get_x()-ballx))/10)  )+
+				(  ((abs(team->player[i].get_y()-bally))/10) * ((abs(team->player[i].get_y()-bally))/10)  )));
+	
+		if(distance<old_distance)
+		{
+			closefield=i;
+			old_distance=distance;
+		}
+	}
+	
+return closefield;
+}
+
+
+
+int Screen::closestwicket(int ballx, int bally)
+{
+unsigned long distance,old_distance;
+
+	 distance=(sqrt(
+				(  ((abs(250-ballx))/10)  *  ((abs(250-ballx))/10)  )+
+				(  ((abs(300-bally))/10)  *  ((abs(300-bally))/10)  )));
+
+	old_distance=(sqrt(
+				(  ((abs(350-ballx))/10)  *  ((abs(350-ballx))/10)  )+
+				(  ((abs(300-bally))/10)  *  ((abs(300-bally))/10)  )));
+//	cout <<"\n"<<distance<<" "<< old_distance;
+	if(distance<old_distance)
+	{return 1;
+	}
+	return 0;
+}
+
+
+
+void Screen::run(Team *team, int innings_num, int extratag, int closest_fielder, int ballx, int bally)
+{
+SDL_Keycode decision;
+//Our event type
+SDL_Event e;	
+//For tracking if we want to quit
+bool quit = false;
+int runshot=0;
+int i,thow=0;
+int wick;
+float throwspeed;
+int x,y;
+float percentage=0;
+SDL_Rect rect;
+int text_size=15;
+
+throwspeed=(rand()%45)+(rand()%55)+(rand()%70)+10;
+throwspeed=throwspeed/100;
+
+SetRenderDrawColor(renderer,GREEN);
+fielderready(team->player[closest_fielder].get_x(),team->player[closest_fielder].get_y(),0);
+SetRenderDrawColor(renderer,RED);
+fieldergo(team->player[closest_fielder].get_x(),team->player[closest_fielder].get_y());
+SetRenderDrawColor(renderer,WHITE);
+
+
+
+x=team->player[closest_fielder].get_x();
+y=team->player[closest_fielder].get_y();
+
+
+	if(closestwicket(ballx,bally)==0)
+	wick=1;
+	else
+	wick=0;
+
+
+	do{
+		SetRenderDrawColor(renderer,WHITE);
+		rect.x = 270;
+		rect.y = 130;
+		rect.w = 73;
+		rect.h = 17;
+		SDL_RenderFillRect(renderer,&rect);
+		
+		ApplySurface(270,128,BLACK,"RUN (Y/N)?",renderer,text_size);
+
+		//Update the screen
+		SDL_RenderPresent(renderer);
+
+		quit=false;
+		while (!quit){
+			//Event Polling
+			while (SDL_PollEvent(&e)){
+				//If user presses any key
+				if (e.type == SDL_KEYDOWN && ((e.key.keysym.sym == SDLK_y)||(e.key.keysym.sym == SDLK_n)))
+				{
+					quit = true;
+					decision=e.key.keysym.sym;
+				}
+			}
+		}
+
+		if(decision==SDLK_n)
+		{
+			continue;
+		}
+		else if(decision==SDLK_y)
+		{
+			SetRenderDrawColor(renderer,GREEN);
+			rect.x = 270;
+			rect.y = 130;
+			rect.w = 73;
+			rect.h = 17;
+			SDL_RenderFillRect(renderer,&rect);
+
+			SetRenderDrawColor(renderer,GREEN);
+			batsmanshot(0);
+			fieldergo(x,y);
+			SetRenderDrawColor(renderer,WHITE);
+			batsmannonstrike(264,309);
+			
+			for(i=0;i<131;i++)   //was87
+			{
+			 if((x!=ballx)&&!thow)
+			 {
+				SetRenderDrawColor(renderer,GREEN);
+				fielderrun(x,y);
+				SetRenderDrawColor(renderer,RED);
+				if(ballx>x)    //player runs horizontally
+				{
+					fielderrun(x+1,y);
+					x=1+x;
+				}
+				else
+				{
+					fielderrun(x-1,y);
+					x=x-1;
+				}
+			 }
+			 else if((y!=bally)&&!thow)      //player runs vertically
+			 {
+				SetRenderDrawColor(renderer,GREEN);
+				fielderrun(x,y);
+				SetRenderDrawColor(renderer,RED);
+				if(bally>y)
+				{
+					y=y+1;
+					fielderrun(x,y+1);
+				}
+				else
+				{
+					fielderrun(x,y-1);
+					y=y-1;
+				}
+			 }
+			 else                                  //player throws ball
+			 {
+				thow=1;
+				SetRenderDrawColor(renderer,RED);
+
+				SDL_RenderDrawLine(renderer,x,y,ballx,bally);
+			 	ballx=x-((int)(x-(250+(100*wick)))*percentage/100);
+			 	bally=y-((int)(y-300)*percentage/100);
+			 	percentage+=throwspeed;
+
+			 	if((percentage>100)&&((!(rand()%6))||((rand()%150)-i>15)))
+				{
+					SetRenderDrawColor(renderer,GREEN);
+				 	wickets(250+100*wick,300);
+					SetRenderDrawColor(renderer,WHITE);
+					brokenwicket(250+100*wick,300);
+
+
+					rect.x = 270;
+					rect.y = 130;
+					rect.w = 60;
+					rect.h = 15;
+					SDL_RenderFillRect(renderer,&rect);
+		
+					ApplySurface(270,128,BLACK,"RUNOUT",renderer,text_size);
+
+ 
+					if((wick+runshot)%2==0)
+					{
+	 					team->innings[innings_num].change_innings_runs(runshot,extratag,RUN_OUT_NON_STRIKER);
+					}
+					else
+					{
+	 					team->innings[innings_num].change_innings_runs(runshot,extratag,RUN_OUT);
+					}
+				 return;
+				 }
+				 else if(percentage>100)
+				 {
+					SetRenderDrawColor(renderer,WHITE);
+					rect.x = 270;
+					rect.y = 130;
+					rect.w = 110;
+					rect.h = 15;
+					SDL_RenderFillRect(renderer,&rect);
+		
+					ApplySurface(270,128,BLACK,"RUNOUT MISSED",renderer,text_size);
+				 	runshot++;
+  					team->innings[innings_num].change_innings_runs(runshot,extratag,NOT_OUT);
+					//Update the screen
+					SDL_RenderPresent(renderer);
+	        			SDL_Delay(1000);  // Pause execution for 3000 milliseconds, for example
+					return;
+				 }
+				
+			 	}
+
+				 if(i<114)      //was76
+				 {
+					SetRenderDrawColor(renderer,GREEN);
+					batsmannonstrike((i/3*2)+264,309);
+					batsmannonstrike(340-(i/3*2),320);
+					SetRenderDrawColor(renderer,WHITE);
+			 		batsmannonstrike(((i+1)/3*2)+264,309);
+			 		batsmannonstrike(340-((i+1)/3*2),320);
+				 }
+				 else
+				 {
+					SetRenderDrawColor(renderer,GREEN);
+					batsmannonstrike(340,309+(i*2/3)-76);
+			 		batsmannonstrike(264,320-(i*2/3)+76);
+
+					SetRenderDrawColor(renderer,WHITE);
+			 		batsmannonstrike(340,309-76+((i+1)*2/3));
+			 		batsmannonstrike(264,320+76-((i+1)*2/3));
+			 	}
+						
+				//Update the screen
+				SDL_RenderPresent(renderer);
+	        		SDL_Delay(1);  // Pause execution for 3000 milliseconds, for example
+
+			}//end of for loop 87
+			runshot++;
+		}//end of if else y
+
+  }while(decision!=SDLK_n);
+
+  team->innings[innings_num].change_innings_runs(runshot,extratag,NOT_OUT);
+  return;
+}
+
+
