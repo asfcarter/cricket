@@ -16,7 +16,7 @@ bool Game::run(){
 SDL_Keycode ret_val;
 bool match_over;
 
-//	firstscreen();
+	firstscreen();
 	ret_val=secondscreen();
 
 	if(ret_val == SDLK_y)
@@ -30,10 +30,10 @@ bool match_over;
 		team[1].setteamcomputer2();
 	}
 
-//	display_scoreboard(&team[0],&team[0],innings_number);
-//	spacebar_to_continue(135,420,WHITE,15);
-//	display_scoreboard(&team[1],&team[1],innings_number);
-//	spacebar_to_continue(135,420,WHITE,15);
+	display_scoreboard(&team[0],&team[0],innings_number);
+	spacebar_to_continue(135,420,WHITE,15);
+	display_scoreboard(&team[1],&team[1],innings_number);
+	spacebar_to_continue(135,420,WHITE,15);
 
 	toss_change=toss_screen(team);
 
@@ -61,7 +61,7 @@ bool match_over;
 
 	do{
 
-		while(!((team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_declared()) || (team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_wickets()==10) || ((team[toss_change].innings[0].get_innings_total()-team[toss_change].innings[0].get_innings_total()+team[(toss_change+follow_on)%2].innings[1].get_innings_total()-team[!(toss_change+follow_on)%2].innings[1].get_innings_total()<0)&&(innings_number==3))))
+		while(!((team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_declared()) || (team[((toss_change+innings_number+follow_on)%2)].innings[innings_number/2].get_wickets()==10) || ((team[toss_change].innings[0].get_innings_total()-team[!toss_change].innings[0].get_innings_total()+team[(toss_change+follow_on)%2].innings[1].get_innings_total()-team[!(toss_change+follow_on)%2].innings[1].get_innings_total()<0)&&(innings_number==3))))
 		{	
 //	send ball into innings
 					
