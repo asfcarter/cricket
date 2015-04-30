@@ -14,9 +14,57 @@
     python manage.py runserver<br>
     <br>
     Live server<br>
+    &nbsp;&nbsp;&nbsp; Setup gunicorn<br>
+    &nbsp;&nbsp;&nbsp; <br>
+    &nbsp;&nbsp;&nbsp; Setup nginx<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; /etc/nginx/sites-enabled/default<br>
+    upstream app_server_djangoapp {<br>
+    &nbsp;&nbsp;&nbsp; server localhost:8001 fail_timeout=0;<br>
+    }<br>
+    <br>
+    server {<br>
+    &nbsp;&nbsp;&nbsp; listen&nbsp;&nbsp; 80;<br>
+    &nbsp;&nbsp;&nbsp; server_name example.com;<br>
+    &nbsp;&nbsp;&nbsp; # no security problem here, since / is alway passed to
+    upstream<br>
+    &nbsp;&nbsp;&nbsp; root /home/asfcarter/django-andy/hello;<br>
+    &nbsp;&nbsp;&nbsp; # serve directly - analogous for static/staticfiles<br>
+    &nbsp;&nbsp;&nbsp; location /media/ {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # if asset versioning is used<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($query_string) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; expires
+    max;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+    &nbsp;&nbsp;&nbsp; }<br>
+    &nbsp;&nbsp;&nbsp; location /admin/media/ {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # this changes depending on your
+    python version<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root
+    /home/asfcarter/django-andy/lib/python2.6/site-packages/django/contrib;<br>
+    &nbsp;&nbsp;&nbsp; }<br>
+    &nbsp;&nbsp;&nbsp; location / {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_pass_header Server;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_set_header Host $http_host;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_redirect off;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_set_header X-Real-IP
+    $remote_addr;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_set_header X-Scheme
+    $scheme;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_connect_timeout 10;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_read_timeout 10;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_pass
+    http://localhost:8000/;<br>
+    &nbsp;&nbsp;&nbsp; }<br>
+    &nbsp;&nbsp;&nbsp; # what to serve if upstream is not available or crashes<br>
+    &nbsp;&nbsp;&nbsp; error_page 500 502 503 504 /media/50x.html;<br>
+    }<br>
+    <br>
+    &nbsp;&nbsp;&nbsp; port forwarding - add screenshot of BT<br>
+    &nbsp;&nbsp;&nbsp; ifconfig<br>
+    &nbsp;&nbsp;&nbsp; noip (Add note doesn't work with www)<br>
+    <br>
     &nbsp;&nbsp;&nbsp; sudo service nginx start<br>
     &nbsp;&nbsp;&nbsp; gunicorn cricket.wsgi:application<br>
-    &nbsp;&nbsp;&nbsp; port forwarding - add screenshot of BT<br>
-    &nbsp;&nbsp;&nbsp; noip (Add note doesn't work with www)<br>
+    <br>
   </body>
 </html>
