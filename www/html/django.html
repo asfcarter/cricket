@@ -8,12 +8,33 @@
     <div style="text-align: center;"><big><big><big>Django</big></big></big><br>
     </div>
     <br>
-    source bin/activate<br>
+    <code>From Mike Hibbert <a href="https://www.youtube.com/watch?v=oT1A1KKf0SI&amp;index=1&amp;list=PLxxA5z-8B2xk4szCgFmgonNcCboyNneMD">Python
+        Django tutorial 1</a>:<br>
+    </code><code>&nbsp;&nbsp;&nbsp; Setting up a django project named "cricket":<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; On a termial do the following:
+      &nbsp;&nbsp; <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; sudo apt-get
+      install python-setuptools</code><br>
+    <code></code><code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      sudo easy-install virtualenv</code><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    virtualenv --no-site-packages django-andy<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    source django-andy/bin/activate<br>
+    <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; easy_install django</code><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+    django-admin.py startproject cricket<br>
     <br>
-    cd project<br>
-    python manage.py runserver<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Then to deactivate the virtualenv and
+    get back to your home terminal type:<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+    deactivate<br>
     <br>
-    Live server<br>
+    &nbsp;&nbsp;&nbsp; To run your application type:<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cd cricket<br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; python manage.py runserver<br>
+    <br>
+    &nbsp;&nbsp;&nbsp; To make this into a live server:<br>
     &nbsp;&nbsp;&nbsp; Setup gunicorn<br>
     &nbsp;&nbsp;&nbsp; <br>
     &nbsp;&nbsp;&nbsp; Setup nginx<br>
@@ -60,6 +81,7 @@
     }<br>
     <br>
     &nbsp;&nbsp;&nbsp; port forwarding - add screenshot of BT<br>
+    &nbsp;&nbsp;&nbsp; http://192.168.1.254<br>
     &nbsp;&nbsp;&nbsp; ifconfig<br>
     &nbsp;&nbsp;&nbsp; noip (Add note doesn't work with www)<br>
     <br>
