@@ -34,6 +34,22 @@
     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cd cricket<br>
     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; python manage.py runserver<br>
     <br>
+    &nbsp;&nbsp;&nbsp; (note this "cricket" directory within the virtual
+    environment is usually changed to "src" to make it distinct from the
+    original directory)<br>
+    <br>
+    &nbsp;&nbsp;&nbsp; Create a database:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; python manage.py migrate<br>
+    &nbsp;&nbsp;&nbsp; (Now in src there should be a file db.sqlite3 if
+    something goes wrong this could be renamed!)<br>
+    <br>
+    &nbsp; &nbsp; Create superuser:<br>
+    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; python manage.py createsuperuser<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     &nbsp;&nbsp;&nbsp; To make this into a live server:<br>
     &nbsp;&nbsp;&nbsp; Setup gunicorn<br>
     &nbsp;&nbsp;&nbsp; <br>
